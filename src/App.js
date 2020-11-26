@@ -1,25 +1,32 @@
-import logo from './logo.svg';
+import React from "react"
+import {connect} from "react-redux"
 import './App.css';
+import {ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import {BrowserRouter, Switch} from "react-router-dom";
+import Login from "./components/layout/login";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+class App extends React.Component {
+    render() {
+        const {user} = this.props
+        if (!user) return <div><Login/> <ToastContainer/></div>
+        return (
+            <BrowserRouter>
+                <div className="App">
+                    <Switch>
+                    </Switch>
+                    <ToastContainer/>
+                </div>
+            </BrowserRouter>
+        )
+    }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+    return {
+        user: state.auth.user
+    }
+}
+
+export default connect(mapStateToProps)(App)
