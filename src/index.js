@@ -15,10 +15,10 @@ import {localStorageTokenConfig} from "./config/localStorageToken";
 import theme from "./config/theme"
 import {toast} from "react-toastify";
 import {library} from '@fortawesome/fontawesome-svg-core'
-import {faComment, faFolder, faLock, faNewspaper, faSignOutAlt, faUser} from '@fortawesome/free-solid-svg-icons'
+import {faComment, faFolder, faLock, faNewspaper, faSignOutAlt, faUser, faTrash} from '@fortawesome/free-solid-svg-icons'
 
 
-library.add(faLock, faNewspaper, faFolder, faComment, faSignOutAlt, faUser)
+library.add(faLock, faNewspaper, faFolder, faComment, faSignOutAlt, faUser, faTrash)
 
 const token = localStorage.getItem('token')
 if (token) {
