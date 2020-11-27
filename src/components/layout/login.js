@@ -4,8 +4,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import loginImage from "../../images/login.jpg"
 import {login} from "../../store/actions/authActions";
 import {connect} from "react-redux"
-import {useForm, Controller } from "react-hook-form"
-
+import {Controller, useForm} from "react-hook-form"
 
 
 const useStyle = makeStyles((theme) => ({
@@ -46,11 +45,11 @@ const Login = (props) => {
     const {handleSubmit, errors, control} = useForm({
         mode: "all",
         reValidateMode: 'onChange',
-        defaultValues :{email: '', password: ''}})
+        defaultValues: {email: '', password: ''}
+    })
 
 
     const onSubmit = (data) => {
-
         Login(data)
     }
 
@@ -85,13 +84,15 @@ const Login = (props) => {
                             )}
                             name="email"
                             control={control}
-                            rules={{ required: {
-                                value:true,
-                                message: "Sans email c'est compliqué"
-                                },pattern: {
+                            rules={{
+                                required: {
+                                    value: true,
+                                    message: "Sans email c'est compliqué"
+                                }, pattern: {
                                     value: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
                                     message: "C'est un email ça ?"
-                                } }}
+                                }
+                            }}
                         />
 
                         {errors.email && (
@@ -114,12 +115,14 @@ const Login = (props) => {
                                     value={props.value}
                                     inputRef={props.ref}
                                 />
-                                )}
+                            )}
                             name={"password"}
                             control={control}
-                            rules={{required:{
-                                value: true, message:"Sans mot de passe c'est compliqué"
-                                }}}
+                            rules={{
+                                required: {
+                                    value: true, message: "Sans mot de passe c'est compliqué"
+                                }
+                            }}
                         />
 
                         {errors.password && (

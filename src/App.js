@@ -4,6 +4,7 @@ import './App.css';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {BrowserRouter, Switch} from "react-router-dom";
+import Navigation from "./components/navigations/navigation";
 import Login from "./components/layout/login";
 
 
@@ -13,6 +14,7 @@ class App extends React.Component {
         if (!user) return <div><Login/> <ToastContainer/></div>
         return (
             <BrowserRouter>
+                <Navigation />
                 <div className="App">
                     <Switch>
                     </Switch>
