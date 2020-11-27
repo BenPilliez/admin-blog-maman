@@ -15,3 +15,9 @@ export const login = (credentials) => {
             })
     }
 }
+
+export const signOut = () => {
+    return (dispatch) => {
+        dispatch({type: 'SIGN_OUT'})
+    }
+}

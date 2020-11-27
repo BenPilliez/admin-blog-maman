@@ -1,8 +1,10 @@
 import React from "react"
 import {AppBar, Tab, Tabs} from "@material-ui/core"
 import {makeStyles} from "@material-ui/core/styles"
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {Link as RouterLink} from "react-router-dom"
+import {signOut} from "../../store/actions/authActions"
+import {connect} from "react-redux"
 
 
 const useStyles = makeStyles((theme) => ({
@@ -20,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 
 const MobileNavigation = (props) => {
 
-    const {items} = props
+    const {items, signout} = props
     const classes = useStyles()
     const [value, setValue] = React.useState(0);
 
@@ -41,9 +43,9 @@ const MobileNavigation = (props) => {
             >
                 {items.map((item, index) => {
                     return (
-                        <Tab value={index} key={index} component={item.link ? RouterLink : 'button'}
+                        <Tab value={index} key={index} onClick={item.signout ? signout : null} component={item.link ? RouterLink : 'button'}
                              to={item.link}
-                             icon={<FontAwesomeIcon size={"lg"} icon={item.icon} />} />
+                             icon={<FontAwesomeIcon color={item.signout ? 'red' : "white"} size={"lg"} icon={item.icon} />} />
                     )
                 })}
 
@@ -52,5 +54,11 @@ const MobileNavigation = (props) => {
     )
 }
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        signout: () => dispatch(signOut())
+    }
+}
 
-export default MobileNavigation
+
+export default connect(null, mapDispatchToProps)(MobileNavigation)

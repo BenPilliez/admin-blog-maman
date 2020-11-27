@@ -18,8 +18,9 @@ const authReducer = (state = initState, action) => {
                 authError: null,
                 user: action.user
             }
-        case 'SIGNOUT_SUCCESS':
+        case 'SIGN_OUT':
             console.log("SIGN OUT")
+            localStorage.clear()
             return {
                 user: null,
                 authError: null

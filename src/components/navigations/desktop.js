@@ -3,6 +3,8 @@ import clsx from "clsx"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Drawer, List, ListItem, ListItemIcon, ListItemText, makeStyles} from "@material-ui/core"
 import {Link as RouterLink} from 'react-router-dom'
+import {connect} from "react-redux"
+import {signOut} from "../../store/actions/authActions"
 
 const drawerWidth = 240
 
@@ -33,6 +35,9 @@ const useStyle = makeStyles((theme) => ({
     notSelected:{
         color: 'white'
     },
+    logout:{
+      color: 'red'
+    },
     drawerClose:{
         transition: theme.transitions.create('width', {
             easing: theme.transitions.easing.sharp,
@@ -47,7 +52,7 @@ const useStyle = makeStyles((theme) => ({
 
 
 const DestokNavigation = (props) => {
-    const {items} = props
+    const {items,signout} = props
     const classes = useStyle()
     const [open, setOpen] = React.useState(false)
     const [selectedIndex, setSelectedIndex] = React.useState(0);
@@ -60,7 +65,8 @@ const DestokNavigation = (props) => {
         setOpen(false)
     }
 
-    const handleMenuItemClick = (event, index) => {
+    const handleMenuItemClick = (event, index, title) => {
+
         setOpen(false)
         setSelectedIndex(index)
     }
@@ -85,7 +91,7 @@ const DestokNavigation = (props) => {
                 <List>
                     {items.map((item, index) => {
                             return <ListItem selected={index === selectedIndex}
-                                             onClick={(event) => handleMenuItemClick(event, index)}
+                                             onClick={ item.signout ? signout : (event) => handleMenuItemClick(event, index)}
                                              className={classes.listItem} button={!item.link}
                                              component={item.link ? RouterLink : ""}
                                              to={item.link}
@@ -93,6 +99,7 @@ const DestokNavigation = (props) => {
                                 <ListItemIcon><FontAwesomeIcon className={clsx(classes.drawer, {
                                     [classes.selected]: index === selectedIndex,
                                     [classes.notSelected]: !index === selectedIndex,
+                                    [classes.logout]: item.signout
                                 })} size="lg" icon={item.icon}/></ListItemIcon>
                                 <ListItemText style={{color: 'white'}} primary={item.title}/>
                             </ListItem>
@@ -103,4 +110,10 @@ const DestokNavigation = (props) => {
     )
 }
 
-export default DestokNavigation
+const mapDispatchToProps = (dispatch) => {
+    return {
+        signout: () => dispatch(signOut())
+    }
+}
+
+export default connect(null,mapDispatchToProps)(DestokNavigation)
