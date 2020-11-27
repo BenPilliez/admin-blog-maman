@@ -4,6 +4,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import loginImage from "../../images/login.jpg"
 import {login} from "../../store/actions/authActions";
 import {connect} from "react-redux"
+import {useForm, Controller } from "react-hook-form"
 
 
 const useStyle = makeStyles((theme) => ({
@@ -41,22 +42,15 @@ const useStyle = makeStyles((theme) => ({
 const Login = (props) => {
     const classes = useStyle()
     const {Login} = props
-    const [email, setEmail] = React.useState(null)
-    const [password, setPassword] = React.useState(null)
+    const {handleSubmit, errors, control} = useForm({defaultValues :{email: '', password: ''}})
 
-    const handleChangeEmail = (e) => {
-        setEmail(e.target.value)
+
+    const onSubmit = (data) => {
+
+        Login(data)
     }
 
-    const handleChangePassword = (e) => {
-        setPassword(e.target.value)
-    }
-
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        Login({email, password})
-    }
-
+    console.log(errors)
 
     return (
         <Grid container component={'main'} className={classes.root}>
@@ -69,20 +63,50 @@ const Login = (props) => {
                     <Typography component="h1" variant="h5">
                         Connecte toi !
                     </Typography>
-                    <form className={classes.form} noValidate onSubmit={handleSubmit}>
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="email"
-                            label="Email"
+                    <form className={classes.form} noValidate onSubmit={handleSubmit((data) => onSubmit(data))}>
+                        <Controller
+                            render={(props) => (
+                                <TextField
+                                    variant="outlined"
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    id="email"
+                                    label="Email"
+                                    name="email"
+                                    onChange={props.onChange}
+                                    value={props.value}
+                                    inputRef={props.ref}
+                                    autoFocus
+                                />
+                            )}
                             name="email"
-                            autoComplete="email"
-                            onChange={handleChangeEmail}
-                            autoFocus
+                            control={control}
+                            rules={{ required: true, message: "Sans email c'est compliqué" }}
                         />
-                        <TextField
+
+                        <Controller
+                            render={(props) => (
+                                <TextField
+                                    variant="outlined"
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    name="password"
+                                    label="Mot de passe"
+                                    type="password"
+                                    id="password"
+                                    onChange={props.onChange}
+                                    value={props.value}
+                                    inputRef={props.ref}
+                                />
+                                )}
+                            name={"password"}
+                            control={control}
+                            rules={{required: true}}
+                        />
+
+                        {/*<TextField
                             variant="outlined"
                             margin="normal"
                             required
@@ -91,9 +115,8 @@ const Login = (props) => {
                             label="Mot de passe"
                             type="password"
                             id="password"
-                            onChange={handleChangePassword}
-                            autoComplete="current-password"
-                        />
+                            ref={register({required: true})}
+                        />*/}
                         <Button
                             type="submit"
                             fullWidth
