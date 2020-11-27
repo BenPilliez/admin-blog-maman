@@ -7,6 +7,7 @@ import {connect} from "react-redux"
 import {useForm, Controller } from "react-hook-form"
 
 
+
 const useStyle = makeStyles((theme) => ({
     root: {
         height: '100vh',
@@ -42,15 +43,16 @@ const useStyle = makeStyles((theme) => ({
 const Login = (props) => {
     const classes = useStyle()
     const {Login} = props
-    const {handleSubmit, errors, control} = useForm({defaultValues :{email: '', password: ''}})
+    const {handleSubmit, errors, control} = useForm({
+        mode: "all",
+        reValidateMode: 'onChange',
+        defaultValues :{email: '', password: ''}})
 
 
     const onSubmit = (data) => {
 
         Login(data)
     }
-
-    console.log(errors)
 
     return (
         <Grid container component={'main'} className={classes.root}>
@@ -69,6 +71,7 @@ const Login = (props) => {
                                 <TextField
                                     variant="outlined"
                                     margin="normal"
+                                    error={!!errors.email && !!errors.email.message}
                                     required
                                     fullWidth
                                     id="email"
@@ -82,13 +85,24 @@ const Login = (props) => {
                             )}
                             name="email"
                             control={control}
-                            rules={{ required: true, message: "Sans email c'est compliqué" }}
+                            rules={{ required: {
+                                value:true,
+                                message: "Sans email c'est compliqué"
+                                },pattern: {
+                                    value: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                                    message: "C'est un email ça ?"
+                                } }}
                         />
+
+                        {errors.email && (
+                            <div className="error">{errors.email.message}</div>
+                        )}
 
                         <Controller
                             render={(props) => (
                                 <TextField
                                     variant="outlined"
+                                    error={!!errors.password && !!errors.password.message}
                                     margin="normal"
                                     required
                                     fullWidth
@@ -103,20 +117,15 @@ const Login = (props) => {
                                 )}
                             name={"password"}
                             control={control}
-                            rules={{required: true}}
+                            rules={{required:{
+                                value: true, message:"Sans mot de passe c'est compliqué"
+                                }}}
                         />
 
-                        {/*<TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="password"
-                            label="Mot de passe"
-                            type="password"
-                            id="password"
-                            ref={register({required: true})}
-                        />*/}
+                        {errors.password && (
+                            <div className="error">{errors.password.message}</div>
+                        )}
+
                         <Button
                             type="submit"
                             fullWidth
