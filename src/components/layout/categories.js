@@ -1,36 +1,50 @@
 import React from "react"
+import {connect} from "react-redux"
+import {listCategories} from "../../store/actions/categoriesActions"
 import ReuseTable from "../custom/table"
+import {CircularProgress} from "@material-ui/core";
 
 class Categories extends React.Component {
 
+    componentDidMount() {
+        if (this.props.loading === false) {
+            this.props.loadCategories()
+        }
+    }
+
+
     render() {
-        const data = [
+        const {loading, list, loadError} = this.props
+
+        const options = [
             {
-                name: 'test',
-
-            },
-            {
-                name: 'test',
-
-            },
-            {
-                name: 'test',
-
-            },
-            {
-                name: 'test@.fr',
-
-            }, {
-                name: '@test.fr',
-
+                label: 'Nom Categorie',
+                data: (row) => row.name
             }
         ]
-        const tableHead = ['name']
+
+        const usersList = loading ? <CircularProgress color={"primary"}/> : <ReuseTable options={options} rows={list}/>
 
         return (
-            <ReuseTable tableHead={tableHead} rows={data}/>
+            <div>
+                {loadError ? <span>{loadError}</span> : usersList}
+            </div>
         )
     }
 }
 
-export default Categories
+const mapStateToProps = (state) => {
+    return {
+        loading: state.categories.loading,
+        list: state.categories.categories,
+        loadError: state.categories.loadError
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        loadCategories: () => dispatch(listCategories())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Categories)

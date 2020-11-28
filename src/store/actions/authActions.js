@@ -6,6 +6,7 @@ export const login = (credentials) => {
             .then((res) => {
                 setAuthorization(axiosInstance, res.data.token)
                 localStorage.setItem('user', JSON.stringify(res.data.user))
+                localStorage.setItem('token', res.data.token)
                 toast.success('Hello, bonne publication')
                 dispatch({type: 'LOGIN_SUCCESS', user: res.data.user})
             })

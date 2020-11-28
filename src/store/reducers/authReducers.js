@@ -3,7 +3,7 @@ const initState = {
     user: JSON.parse(localStorage.getItem('user')) || null
 }
 
-const authReducer = (state = initState, action) => {
+const authReducers = (state = initState, action) => {
     switch (action.type) {
         case 'LOGIN_ERROR':
             console.error('login error')
@@ -31,4 +31,4 @@ const authReducer = (state = initState, action) => {
     }
 }
 
-export default authReducer
+export default authReducers
