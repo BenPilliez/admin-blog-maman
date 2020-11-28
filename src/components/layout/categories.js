@@ -2,19 +2,26 @@ import React from "react"
 import {connect} from "react-redux"
 import {listCategories} from "../../store/actions/categoriesActions"
 import ReuseTable from "../custom/table"
-import {CircularProgress} from "@material-ui/core";
+import {CircularProgress} from "@material-ui/core"
 
 class Categories extends React.Component {
 
-    componentDidMount() {
-        if (this.props.loading === false) {
-            this.props.loadCategories()
-        }
+    state = {
+        query: {}
     }
 
+    handleQuery = (value) => {
+        return this.setState({query:value})
+    }
+
+    componentDidMount() {
+        this.props.loadCategories()
+    }
 
     render() {
-        const {loading, list, loadError} = this.props
+
+        const {loading, list, loadError, pagination} = this.props
+        console.log(this.state)
 
         const options = [
             {
@@ -22,9 +29,8 @@ class Categories extends React.Component {
                 data: (row) => row.name
             }
         ]
-
-        const usersList = loading ? <CircularProgress color={"primary"}/> : <ReuseTable options={options} rows={list}/>
-
+        const usersList = loading ? <CircularProgress color={"primary"}/> :
+            <ReuseTable handleQuery={this.handleQuery} pagination={pagination} options={options} rows={list}/>
         return (
             <div>
                 {loadError ? <span>{loadError}</span> : usersList}
@@ -37,6 +43,7 @@ const mapStateToProps = (state) => {
     return {
         loading: state.categories.loading,
         list: state.categories.categories,
+        pagination: state.categories.pagination,
         loadError: state.categories.loadError
     }
 }

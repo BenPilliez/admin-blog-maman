@@ -45,7 +45,7 @@ const MobileNavigation = (props) => {
                     return (
                         <Tab value={index} key={index} onClick={item.signout ? signout : null} component={item.link ? RouterLink : 'button'}
                              to={item.link}
-                             icon={<FontAwesomeIcon color={item.signout ? 'red' : "white"} size={"lg"} icon={item.icon} />} />
+                             icon={<FontAwesomeIcon color={item.signout ? 'black' : "white"} size={"lg"} icon={item.icon} />} />
                     )
                 })}
 

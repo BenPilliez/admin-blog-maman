@@ -1,6 +1,7 @@
 const initState = {
     loading: false,
     categories: null,
+    pagination: null,
     loadError: null
 }
 
@@ -15,7 +16,13 @@ const categoriesReducers = (state = initState, action) => {
             return {
                 ...state,
                 loading: false,
-                categories: action.data
+                pagination: {
+                    totalItems: action.data.totalItems,
+                    totalPage: action.data.totalPages,
+                    limit: action.data.limit,
+                    currentPage: action.data.currentPage
+                },
+                categories: action.data.items
             }
         case 'CATEGORIES_LOAD_FAILED' :
             return {

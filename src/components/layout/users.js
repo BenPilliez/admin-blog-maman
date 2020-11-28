@@ -8,15 +8,22 @@ import "moment/locale/fr"
 
 class Users extends React.Component {
 
-
     componentDidMount() {
-        if (this.props.loading === false) {
-            this.props.loadUsers()
-        }
+        this.props.loadUsers()
+    }
+
+    state = {
+        query: null
+    }
+
+    handleQuery = (value) => {
+         return this.setState({
+            query: value
+        })
     }
 
     render() {
-        const {loading, list, loadError} = this.props
+        const {loading, list, loadError, pagination} = this.props
         const options = [
             {
                 label: "id",
@@ -38,7 +45,7 @@ class Users extends React.Component {
             }
         ]
 
-        const usersList = loading ? <CircularProgress color={"primary"}/> : <ReuseTable options={options} rows={list}/>
+        const usersList = loading ? <CircularProgress color={"primary"}/> : <ReuseTable pagination={pagination} handleQuery={this.handleQuery} options={options} rows={list}/>
 
         return (
             <div>
@@ -52,6 +59,7 @@ const mapStateToProps = (state) => {
     return {
         loading: state.users.loading,
         list: state.users.usersList,
+        pagination: state.users.pagination,
         loadError: state.users.loadError
     }
 }

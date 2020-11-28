@@ -1,6 +1,7 @@
 const initState = {
     loading: false,
     usersList: null,
+    pagination: null,
     loadError: null
 }
 
@@ -14,8 +15,14 @@ const usersReducers = (state = initState, action) => {
         case 'USERS_LOAD_SUCCESS' :
             return {
                 ...state,
-                loading: false,
-                usersList: action.data
+                pagination: {
+                    totalItems: action.data.totalItems,
+                    totalPage: action.data.totalPages,
+                    limit: action.data.limit,
+                    currentPage: action.data.currentPage
+                },
+                usersList: action.data.items,
+                loading: false
             }
         case 'USERS_LOAD_FAILED' :
             return {

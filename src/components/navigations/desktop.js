@@ -36,7 +36,7 @@ const useStyle = makeStyles((theme) => ({
         color: 'white'
     },
     logout:{
-      color: 'red'
+      color: 'black'
     },
     drawerClose:{
         transition: theme.transitions.create('width', {

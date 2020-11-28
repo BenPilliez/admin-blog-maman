@@ -1,8 +1,19 @@
 import React from "react"
-import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core"
+import {
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    TablePagination} from "@material-ui/core"
 
 const ReuseTable = (props) => {
-    const {options, rows} = props
+    const {options, rows, pagination, handleQuery} = props
+
+    const [page, setPage] = React.useState(0)
+    const [rowsPerPage, setRowsPerPage] = React.useState(10 )
 
     const RenderTableHead = () => {
         return (
@@ -22,7 +33,7 @@ const ReuseTable = (props) => {
                 {rows && rows.map((row, index) => {
                     return (
                         <TableRow key={index}>
-                            {options.map((option,key) => {
+                            {options.map((option, key) => {
                                 return (
                                     <RenderTableRow key={key} row={row} option={option}/>
                                 )
@@ -42,15 +53,39 @@ const ReuseTable = (props) => {
         )
     }
 
-    return (
-        <TableContainer component={Paper}>
-            <Table size={"medium"}>
-                <RenderTableHead/>
-                <RenderTableBody/>
-            </Table>
-        </TableContainer>
-    )
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+        handleQuery({page: newPage, limit: rowsPerPage})
+    };
 
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0);
+        handleQuery({page:0, limit: event.target.value})
+    };
+
+    return (
+        <div>
+        {rows !== null ?  <Paper>
+            <TableContainer component={Paper}>
+                <Table size={"medium"}>
+                    <RenderTableHead/>
+                    <RenderTableBody/>
+                </Table>
+            </TableContainer>
+            <TablePagination
+                rowsPerPageOptions={[1,5, 10, 25]}
+                component="div"
+                count={pagination.totalItems}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onChangePage={handleChangePage}
+                onChangeRowsPerPage={handleChangeRowsPerPage}
+            />
+        </Paper> : null }
+        </div>
+
+    )
 }
 
 export default ReuseTable

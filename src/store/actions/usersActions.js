@@ -9,7 +9,7 @@ export const usersList = () => {
         dispatch(onLoad())
         axiosInstance({url: `${process.env.REACT_APP_BASE_URL}/users`, method: 'GET'})
             .then(res => {
-                dispatch({type: 'USERS_LOAD_SUCCESS', data: res.data.items})
+                dispatch({type: 'USERS_LOAD_SUCCESS', data: res.data})
             })
             .catch(err => {
                 dispatch({type: 'USERS_LOAD_FAILED', err: err.response.data})
