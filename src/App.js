@@ -25,6 +25,7 @@ const styles = theme => ({
 class App extends React.Component {
     render() {
         const {user, classes} = this.props
+
         if (!user) return <div><Login/> <ToastContainer/></div>
         return (
             <BrowserRouter>
@@ -36,8 +37,8 @@ class App extends React.Component {
                                 <Route component={Users} path={"/users"}/>
                                 <Route component={Categories} path={"/categories"}/>
                             </Switch>
-                            <ToastContainer/>
                         </div>
+                        <ToastContainer/>
                     </main>
                 </div>
             </BrowserRouter>
@@ -47,7 +48,8 @@ class App extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        user: state.auth.user
+        user: state.auth.user,
+        authSuccess: state.auth.success
     }
 }
 

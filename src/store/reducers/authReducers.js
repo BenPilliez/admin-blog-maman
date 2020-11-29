@@ -1,5 +1,6 @@
 const initState = {
     authError: null,
+    success: false,
     user: JSON.parse(localStorage.getItem('user')) || null
 }
 
@@ -16,6 +17,7 @@ const authReducers = (state = initState, action) => {
             return {
                 ...state,
                 authError: null,
+                success:true,
                 user: action.user
             }
         case 'SIGN_OUT':

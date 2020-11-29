@@ -6,7 +6,6 @@ import {login} from "../../store/actions/authActions";
 import {connect} from "react-redux"
 import {Controller, useForm} from "react-hook-form"
 
-
 const useStyle = makeStyles((theme) => ({
     root: {
         height: '100vh',

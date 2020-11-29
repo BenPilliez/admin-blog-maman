@@ -4,10 +4,11 @@ export const onLoad = () => {
     }
 }
 
-export const usersList = () => {
+export const usersList = (query) => {
     return (dispatch, getState, {axiosInstance}) => {
         dispatch(onLoad())
-        axiosInstance({url: `${process.env.REACT_APP_BASE_URL}/users`, method: 'GET'})
+        console.log(query)
+        axiosInstance({url: `${process.env.REACT_APP_BASE_URL}/users`, params:{perPage:1}, method: 'GET'})
             .then(res => {
                 dispatch({type: 'USERS_LOAD_SUCCESS', data: res.data})
             })

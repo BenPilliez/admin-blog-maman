@@ -1,12 +1,14 @@
 import authReducers from "./authReducers"
 import usersReducers from "./usersReducers"
+import categoriesReducers from "./categoriesReducers"
+import handleRequestReducers from "./handleRequestReducers"
 import {combineReducers} from "redux"
-import categoriesReducers from "./categoriesReducers";
 
 const rootReducer = combineReducers({
     auth: authReducers,
     users: usersReducers,
-    categories: categoriesReducers
+    categories: categoriesReducers,
+    request: handleRequestReducers
 })
 
 export default rootReducer
