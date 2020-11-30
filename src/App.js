@@ -8,6 +8,7 @@ import Navigation from "./components/navigations/navigation"
 import Login from "./components/auth/login"
 import Users from "./components/layout/users"
 import Categories from "./components/layout/categories"
+import Posts from "./components/layout/posts"
 import {withStyles} from "@material-ui/core"
 
 
@@ -36,6 +37,7 @@ class App extends React.Component {
                             <Switch>
                                 <Route component={Users} path={"/users"}/>
                                 <Route component={Categories} path={"/categories"}/>
+                                <Route component={Posts} path={"/posts"}/>
                             </Switch>
                         </div>
                         <ToastContainer/>

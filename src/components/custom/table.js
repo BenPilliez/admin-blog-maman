@@ -1,4 +1,3 @@
-
 import React, {useEffect} from "react"
 import {
     CircularProgress,
@@ -12,7 +11,7 @@ import {
     TableRow
 } from "@material-ui/core"
 import {connect} from "react-redux"
-import {loadData, resetProps} from "../../store/actions/handleRequestActions";
+import {loadData} from "../../store/actions/handleRequestActions";
 
 
 const ReuseTable = (props) => {
@@ -56,7 +55,6 @@ const ReuseTable = (props) => {
     }
 
     const RenderTableError = () => {
-        console.log(loadError)
         return (
             <TableRow>
                 <TableCell>{loadError}</TableCell>
@@ -110,7 +108,6 @@ const ReuseTable = (props) => {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state.request)
     return {
         loaded: state.request.loaded,
         rows: state.request.data,
@@ -121,8 +118,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        loadData: (params) => dispatch(loadData(params)),
-        resetProps: () => dispatch(resetProps())
+        loadData: (params) => dispatch(loadData(params))
     }
 }
 

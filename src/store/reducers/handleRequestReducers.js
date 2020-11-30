@@ -36,12 +36,6 @@ export const handleRequestReducers = (state = initState, action) => {
                 },
                 data: action.data.items
             }
-        case 'RESET_PROPS' : {
-            return {
-                ...state,
-                loaded: false
-            }
-        }
         default:
             return state
     }

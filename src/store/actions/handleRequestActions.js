@@ -23,9 +23,3 @@ export const loadData = ({url, query}) => {
             })
     }
 }
-
-export const resetProps = () => {
-    return (dispatch) => {
-        dispatch({type: 'RESET_PROPS'})
-    }
-}
