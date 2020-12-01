@@ -1,5 +1,5 @@
 import React from "react"
-import ReuseTable from "../custom/table"
+import ReuseTable from "../custom/table/table"
 import {useMediaQuery} from "@material-ui/core"
 import moment from "moment"
 import "moment/locale/fr"
@@ -14,6 +14,7 @@ const Categories = () => {
         <div>
             {!matches ? <ReuseTable options={
                 {
+                    tableTile: 'Categories',
                     headCell: [
                         {
                             label: "id",
