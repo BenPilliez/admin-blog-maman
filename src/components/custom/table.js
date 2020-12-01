@@ -8,7 +8,8 @@ import {
     TableContainer,
     TableHead,
     TablePagination,
-    TableRow
+    TableRow,
+    TableSortLabel
 } from "@material-ui/core"
 import {connect} from "react-redux"
 import {loadData} from "../../store/actions/handleRequestActions";
@@ -16,11 +17,14 @@ import {loadData} from "../../store/actions/handleRequestActions";
 
 const ReuseTable = (props) => {
 
-    const {options :{headCell, params}, rows, loadData, pagination, loaded, loadError} = props
+    const {options: {headCell, params}, rows, loadData, pagination, loaded, loadError} = props
+    const [direction, setDirection] = React.useState(params.query.order[1])
+    const [orderBy, setOrderBy] = React.useState(params.query.order[0])
     const [page, setPage] = React.useState(params.query.page)
     const [rowsPerPage, setRowsPerPage] = React.useState(params.query.perPage)
 
     useEffect(() => {
+
         loadData(params)
     }, [loadData, params])
 
@@ -29,7 +33,20 @@ const ReuseTable = (props) => {
             <TableHead>
                 <TableRow>
                     {headCell.map((item, index) => {
-                        return <TableCell key={index}> {item.label.toUpperCase()} </TableCell>
+                        return item.sorting ?
+                            <TableCell
+                                key={index}
+                                sortDirection={orderBy === item.label ? direction : false}
+                            >
+                                <TableSortLabel
+                                    active={orderBy === item.label || orderBy === item.bddName }
+                                    direction={orderBy === item.label || orderBy === item.bddName ? direction : 'asc'}
+                                    onClick={() => handleSort(item.bddName ? item.bddName : item.label)}
+                                >
+                                    {item.label.toUpperCase()}
+                                </TableSortLabel>
+                            </TableCell>
+                            : (<TableCell key={index}> {item.label.toUpperCase()} </TableCell>)
                     })}
                 </TableRow>
             </TableHead>
@@ -39,7 +56,7 @@ const ReuseTable = (props) => {
     const RenderTableBody = () => {
         return (
             <TableBody>
-                { !loadError && rows ? rows.map((row, index) => {
+                {!loadError && rows ? rows.map((row, index) => {
                     return (
                         <TableRow key={index}>
                             {headCell.map((option, key) => {
@@ -49,7 +66,7 @@ const ReuseTable = (props) => {
                             })}
                         </TableRow>
                     )
-                }) : (<RenderTableError  />)}
+                }) : (<RenderTableError/>)}
             </TableBody>
         )
     }
@@ -80,6 +97,15 @@ const ReuseTable = (props) => {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
         params['query']['perPage'] = event.target.value
+        loadData(params)
+    }
+
+    const handleSort = (property) => {
+        const isAsc = orderBy === property && direction === 'asc'
+        const order = isAsc ? 'desc' : 'asc'
+        setDirection(order)
+        setOrderBy(property)
+        params['query']['order'] = [property, order]
         loadData(params)
     }
 

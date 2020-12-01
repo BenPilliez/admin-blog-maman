@@ -6,7 +6,7 @@ import {useMediaQuery} from "@material-ui/core"
 import "moment/locale/fr"
 
 
-const Users =  () => {
+const Users = () => {
 
     const matches = useMediaQuery((theme) => theme.breakpoints.down('sm') || theme.breakpoints.down('xs'), {noSsr: true})
 
@@ -17,6 +17,7 @@ const Users =  () => {
                     headCell: [
                         {
                             label: "id",
+                            sorting: true,
                         },
                         {
                             label: 'Photo',
@@ -27,16 +28,21 @@ const Users =  () => {
                             data: (row) => row && row.ROLES ? row.ROLES.join(',') : null
                         },
                         {
-                            label: 'email'
+                            label: 'email',
+                            sorting: true,
                         },
                         {
                             label: "Membre depuis",
+                            bddName: 'createdAt',
+                            sorting: true,
                             data: (row) => moment(row.createdAt).format('LL')
                         }
                     ],
                     params: {
                         query:
-                            {perPage: 10, page: 0},
+                            {
+                                perPage: 10, page: 0, order: ['id', 'asc']
+                            },
                         url: 'users'
                     }
                 }}
@@ -54,7 +60,9 @@ const Users =  () => {
                         }
                     ],
                     params: {
-                        query: {perPage: 10, page: 0},
+                        query: {
+                            perPage: 10, page: 0, order: ['id', 'asc']
+                        },
                         url: 'users'
                     }
                 }

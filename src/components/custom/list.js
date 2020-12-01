@@ -1,6 +1,14 @@
 import React, {useEffect} from "react"
 import {connect} from "react-redux"
-import {CircularProgress, List, ListItem, ListItemText, TablePagination, Typography, Paper} from "@material-ui/core"
+import {
+    CircularProgress,
+    List,
+    ListItem,
+    ListItemText,
+    TablePagination,
+    Typography,
+    Paper
+} from "@material-ui/core"
 import {loadData} from "../../store/actions/handleRequestActions";
 
 
@@ -33,12 +41,22 @@ const ReuseList = (props) => {
         return <span style={{padding: "2px"}}>{item.label} {data}</span>
     }
 
+    const RenderItemError = () => {
+        return (
+            <ListItem>
+                <ListItemText>
+                    {loadError}
+                </ListItemText>
+            </ListItem>
+        )
+    }
+
     return (
         <div>
             {loaded ?
                 <Paper>
                     <List>
-                    {rows && rows.map((row, index) => {
+                    {!loadError && rows ? rows.map((row, index) => {
                         return <ListItem key={index}>
                             <ListItemText
                                 primary={text.data(row)}
@@ -52,7 +70,7 @@ const ReuseList = (props) => {
                                     </React.Fragment>
                                 }/>
                         </ListItem>
-                    })}
+                    }) : (<RenderItemError />)}
                 </List>
                 <TablePagination
                     rowsPerPageOptions={[1, 5, 10, 25]}

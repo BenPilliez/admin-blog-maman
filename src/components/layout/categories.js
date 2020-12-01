@@ -8,7 +8,7 @@ import ReuseList from "../custom/list";
 
 const Categories = () => {
 
-    const matches = useMediaQuery((theme) => theme.breakpoints.down('sm') || theme.breakpoints.down('xs'), { noSsr: true })
+    const matches = useMediaQuery((theme) => theme.breakpoints.down('sm') || theme.breakpoints.down('xs'), {noSsr: true})
 
     return (
         <div>
@@ -16,7 +16,13 @@ const Categories = () => {
                 {
                     headCell: [
                         {
+                            label: "id",
+                            sorting: true,
+                        },
+                        {
                             label: 'Nom Categorie',
+                            sorting: true,
+                            bddName: 'name',
                             data: (row) => row.name
                         },
                         {
@@ -27,9 +33,10 @@ const Categories = () => {
                     params: {
                         query: {
                             perPage: 10,
-                            page: 0
+                            page: 0,
+                            order: ['id', 'asc']
                         },
-                        url: 'category'
+                        url: 'category',
                     }
                 }}/> : <ReuseList options={
                 {
@@ -41,9 +48,11 @@ const Categories = () => {
 
                         query: {
                             perPage: 10,
-                            page: 0
+                            page: 0,
+                            order: ['id', 'asc']
                         },
-                        url: 'category'
+                        url: 'category',
+
                     }
                 }}/>}
         </div>
