@@ -3,7 +3,7 @@ import {Dialog, DialogContent, DialogTitle, Slide, Typography} from "@material-u
 import AppBars from "./appBar"
 
 const Transition = React.forwardRef(function Transition(props, ref) {
-    return <Slide direction="right" ref={ref} {...props} />
+    return <Slide direction="up" ref={ref} {...props} />
 });
 
 const CustomDialog = ({isOpen, title, handleClose, children}) => {

@@ -25,11 +25,11 @@ const RenderTableBody = (props) => {
     }
 
     const RenderTableAction = (props) => {
-        const {action} = props
+        const {action, id} = props
         return (
             <TableCell>
                 <Button color={"primary"}
-                        onClick={() => action.handler(action.action === "edit")}
+                        onClick={() => action.handler(id)}
                         startIcon={<FontAwesomeIcon icon={action.icon}/>}>
                     {action.label}
                 </Button>
@@ -64,7 +64,7 @@ const RenderTableBody = (props) => {
                         })}
 
                         {actions && actions.map((action, key) => {
-                            return <RenderTableAction key={key} action={action}/>
+                            return <RenderTableAction key={key} action={action} id={row.id}/>
 
                         })}
 

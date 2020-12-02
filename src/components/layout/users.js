@@ -5,7 +5,7 @@ import moment from "moment"
 import {useMediaQuery} from "@material-ui/core"
 import "moment/locale/fr"
 import CustomDialog from "../custom/customDialog"
-import EditUser from "./editUser"
+import FormUser from "./formUser"
 
 
 const Users = () => {
@@ -13,6 +13,7 @@ const Users = () => {
     const matches = useMediaQuery((theme) => theme.breakpoints.down('sm') || theme.breakpoints.down('xs'), {noSsr: true})
     const [edit, setEdit] = React.useState(false)
     const [open, setOpen] = React.useState(false)
+    const [userId, setUserId] = React.useState()
 
     const params = {
         query: {
@@ -38,10 +39,10 @@ const Users = () => {
             label: 'Editer',
             action: 'edit',
             icon: 'edit',
-            handler: (isEdit) => {
-                isEdit ? setEdit(true) : setEdit(false)
+            handler: (id) => {
+                setEdit(true)
                 setOpen(true)
-                console.log('edit modal')
+                setUserId(id)
             }
         },
     ]
@@ -108,8 +109,7 @@ const Users = () => {
                 isOpen={open}
                 handleClose={handleClose}
             >
-                {edit ? <EditUser /> : null}
-
+                <FormUser isEdit={edit} userId={userId}/>
             </CustomDialog>
         </div>
     )

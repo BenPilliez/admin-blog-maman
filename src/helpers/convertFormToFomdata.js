@@ -7,11 +7,10 @@ export const converFormToFormData = (form) => {
                     return formData.append(key, item)
                 })
             } else {
-                formData.append(key, form[key])
+                formData.append(key, form[key][0])
             }
 
         } else {
-
             formData.append(key, form[key])
         }
     }
