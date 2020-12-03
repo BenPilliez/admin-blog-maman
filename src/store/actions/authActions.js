@@ -11,8 +11,13 @@ export const login = (credentials) => {
                 dispatch({type: 'LOGIN_SUCCESS', user: res.data.user})
             })
             .catch(err => {
-                toast.error(err.response.data.error)
-                dispatch({type: 'LOGIN_FAILED', err: err.response.data.error})
+                if(err.response) {
+                    toast.error(err.response.data.error)
+                    dispatch({type: 'LOGIN_FAILED', err: err.response.data.error})
+                }else{
+                    toast.error("Oops on a un problème")
+                    dispatch({type: 'LOGIN_FAILED', err: err})
+                }
             })
     }
 }

@@ -5,6 +5,7 @@ import moment from "moment"
 import {useMediaQuery} from "@material-ui/core"
 import "moment/locale/fr"
 import CustomDialog from "../custom/customDialog"
+import {Button} from "@material-ui/core"
 import FormUser from "./formUser"
 
 
@@ -47,12 +48,13 @@ const Users = () => {
         },
     ]
 
-    const handleClose = () => {
+    const handleDialog = () => {
         setOpen(!open)
     }
 
     return (
         <div>
+            <Button onClick={handleDialog}>Créer</Button>
             {!matches ? <ReuseTable options={
                 {
                     tableTile: 'Utilisateurs',
@@ -105,9 +107,9 @@ const Users = () => {
                 }
                 }/>}
             <CustomDialog
-                title={edit ? "Editer" : ""}
+                title={edit ? "Editer" : "Créer un utilisateur"}
                 isOpen={open}
-                handleClose={handleClose}
+                handleClose={handleDialog}
             >
                 <FormUser isEdit={edit} userId={userId}/>
             </CustomDialog>

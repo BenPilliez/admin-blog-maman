@@ -1,5 +1,5 @@
 import React from "react"
-import {Avatar, Button, Chip, Container, Dialog, DialogActions, DialogContent, Grid, TextField} from "@material-ui/core"
+import {Avatar, Button, Chip, Container, Dialog, DialogActions, DialogContent, Grid, TextField,InputAdornment, IconButton} from "@material-ui/core"
 import Autocomplete from "@material-ui/lab/Autocomplete"
 import {DropzoneArea} from "material-ui-dropzone"
 import {converFormToFormData} from "../../helpers/convertFormToFomdata"
@@ -25,11 +25,14 @@ const FormUser = (props) => {
     const defaultValue = user ? {email: user.email, avatar: user.avatar, ROLES: user.ROLES} : {
         email: '',
         avatar: '',
+        password: '',
+        confirmPassword: '',
         ROLES: [...fixedOptions, options[0]]
     }
 
     const [open, setOpen] = React.useState(false)
-    const [files, setFiles] = React.useState(user.avatar || '')
+    const [files, setFiles] = React.useState(user ? user.avatar : '')
+    const [showPassword, setShowPassword] = React.useState(false)
 
     const {handleSubmit, errors, control} = useForm({
         mode: "all",
@@ -43,12 +46,55 @@ const FormUser = (props) => {
         update(formData, user.id)
     }
 
+    const handleClickShowPassword = () => {
+        setShowPassword(!showPassword)
+    }
+
     const handleOpen = () => {
         setOpen(true)
     }
 
     const handleClose = () => {
         setOpen(false)
+    }
+
+    const PasswordInput = () => {
+        return (
+            <Controller
+            render={(onChange, ...props) => {
+               return <TextField
+                   fullWidth={true}
+                    variant={"outlined"}
+                    label={"Mot de passe"}
+                    id="password"
+                    type={showPassword ? 'text' : 'password'}
+                    onChange={(event, newValue) => {
+                        onChange(newValue)
+                    }
+                    }
+                    InputProps={{
+                        endAdornment: (
+                            <InputAdornment position="end">
+                                <IconButton
+                                    aria-label="Montrer le mot de passe"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        handleClickShowPassword()
+                                    }}
+                                >
+                                    {/*{showPassword ? <Visibility/> : <VisibilityOff/>}*/}
+                                </IconButton>
+                            </InputAdornment>)
+                    }}
+                    required
+                />
+            }}
+             name={"password"}
+            control={control}
+            >
+
+            </Controller>
+        )
     }
 
     return (
@@ -135,6 +181,7 @@ const FormUser = (props) => {
                             control={control}
                         />
                     </Grid>
+                    {!user ? <Grid item xs={12} lg={12} md={12}><PasswordInput /> </Grid>: null}
                     <Dialog open={open}
                             fullWidth={true}
                             onClose={handleClose}>
@@ -145,7 +192,6 @@ const FormUser = (props) => {
                                         dropzoneText={"Dépose ton avatar ou clique"}
                                         acceptedFiles={['image/*']}
                                         onChange={(files) => {
-                                            console.log(files);
                                             setFiles(files)
                                         }}
                                         filesLimit={1}
