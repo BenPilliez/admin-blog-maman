@@ -22,12 +22,13 @@ const CustomDialog = ({isOpen, title,fullScreen,fullWidth, handleClose, children
             </DialogContent>
 
             {dialogActions ? <DialogActions>
-                <Button onClick={handleClose} color="primary">
-                    Annuler
-                </Button>
-                <Button onClick={handleClose} color="primary">
-                    Ok
-                </Button>
+                {dialogActions.map((item, index) => {
+                    return(
+                        <Button key={index} onClick={item.handler ? item.handler : handleClose} color={item.color ? item.color : 'primary'}>
+                        {item.label}
+                    </Button>
+                    )
+                })}
             </DialogActions> : null }
 
         </Dialog>
@@ -37,8 +38,7 @@ const CustomDialog = ({isOpen, title,fullScreen,fullWidth, handleClose, children
 CustomDialog.defaultProps = {
     isOpen: false,
     fullScreen: false,
-    fullWidth: true,
-    dialogActions: true
+    fullWidth: true
 }
 
 CustomDialog.propTypes = {
@@ -48,7 +48,7 @@ CustomDialog.propTypes = {
     fullScreen: PropTypes.bool,
     handleClose: PropTypes.func.isRequired,
     children: PropTypes.element,
-    dialogActions: PropTypes.bool
+    dialogActions: PropTypes.array
 }
 
 export default CustomDialog

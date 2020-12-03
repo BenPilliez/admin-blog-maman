@@ -8,7 +8,8 @@ import CustomDialog from "../custom/customDialog"
 import {Button} from "@material-ui/core"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import FormUser from "./formUser"
-import {makeStyles} from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles"
+import UserDetail from "./userDetail"
 
 const useStyle = makeStyles((theme) => ({
     root: {
@@ -26,6 +27,7 @@ const Users = () => {
     const classes = useStyle()
     const [edit, setEdit] = React.useState(false)
     const [open, setOpen] = React.useState(false)
+    const [openShow, setOpenShow] = React.useState(false)
     const [userId, setUserId] = React.useState()
 
 
@@ -40,13 +42,19 @@ const Users = () => {
         console.log('Delete function')
     }
 
+    const handleDialogShow = () => {
+        setOpenShow(!openShow)
+    }
+
     const actions = [
         {
             label: 'Voir',
             icon: 'eye',
             action: 'show',
-            handler: () => {
-                console.log('Show modal')
+            handler: (id) => {
+                setOpenShow(true)
+                setUserId(id)
+
             }
         },
         {
@@ -126,9 +134,22 @@ const Users = () => {
                 isOpen={open}
                 fullScreen={true}
                 handleClose={handleDialog}
-                dialogActions={false}
             >
                 <FormUser isEdit={edit} userId={userId} handleDialogClose={handleDialog}/>
+            </CustomDialog>
+
+            <CustomDialog
+                title={"Jeter un oeil"}
+                isOpen={openShow}
+                fullScreen={matches}
+                handleClose={handleDialogShow}
+                dialogActions={[{label: 'Editer', handler: () => {
+                        setEdit(true)
+                        setOpen(true)
+                        setOpenShow(false)
+                }},{label: 'Fermer'}]}
+            >
+                <UserDetail userId={userId} />
             </CustomDialog>
         </div>
     )

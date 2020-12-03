@@ -296,7 +296,7 @@ const FormUser = (props) => {
                             )}
                         </Grid>
                     </>) : null}
-                    <CustomDialog isOpen={open} handleClose={handleClose} title={"Avatar"}>
+                    <CustomDialog isOpen={open} handleClose={handleClose} title={"Avatar"} dialogActions={[{label: 'Annuler'}, {label: 'Ok'}]}>
                         <Controller
                             render={(props) => {
                                 return <DropzoneArea
