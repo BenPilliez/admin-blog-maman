@@ -109,6 +109,7 @@ const Users = () => {
             <CustomDialog
                 title={edit ? "Editer" : "Créer un utilisateur"}
                 isOpen={open}
+                fullScreen={true}
                 handleClose={handleDialog}
             >
                 <FormUser isEdit={edit} userId={userId}/>
