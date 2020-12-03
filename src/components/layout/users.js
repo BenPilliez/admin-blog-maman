@@ -6,15 +6,28 @@ import {useMediaQuery} from "@material-ui/core"
 import "moment/locale/fr"
 import CustomDialog from "../custom/customDialog"
 import {Button} from "@material-ui/core"
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import FormUser from "./formUser"
+import {makeStyles} from "@material-ui/core/styles";
 
+const useStyle = makeStyles((theme) => ({
+    root: {
+        border : 'none',
+        [theme.breakpoints.up('md')]:{
+            float: 'right',
+            margin: theme.spacing(1)
+        }
+    }
+}))
 
 const Users = () => {
 
     const matches = useMediaQuery((theme) => theme.breakpoints.down('sm') || theme.breakpoints.down('xs'), {noSsr: true})
+    const classes = useStyle()
     const [edit, setEdit] = React.useState(false)
     const [open, setOpen] = React.useState(false)
     const [userId, setUserId] = React.useState()
+
 
     const params = {
         query: {
@@ -50,11 +63,13 @@ const Users = () => {
 
     const handleDialog = () => {
         setOpen(!open)
+        setEdit(false)
+        setUserId(null)
     }
 
     return (
         <div>
-            <Button onClick={handleDialog}>Créer</Button>
+            <Button className={classes.root} color={"primary"} variant={"outlined"} onClick={handleDialog} startIcon={<FontAwesomeIcon icon={"plus"} />}>Créer</Button>
             {!matches ? <ReuseTable options={
                 {
                     tableTile: 'Utilisateurs',
@@ -111,8 +126,9 @@ const Users = () => {
                 isOpen={open}
                 fullScreen={true}
                 handleClose={handleDialog}
+                dialogActions={false}
             >
-                <FormUser isEdit={edit} userId={userId}/>
+                <FormUser isEdit={edit} userId={userId} handleDialogClose={handleDialog}/>
             </CustomDialog>
         </div>
     )

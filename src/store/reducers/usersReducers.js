@@ -9,7 +9,21 @@ const usersReducers = (state = initState, action) => {
         case 'FORM_SENDING' :
             return {
                 ...state,
-                formSending: true
+                formSending: true,
+                success: false,
+                error: false,
+            }
+        case 'USERS_CREATE_SUCCESS':
+            return {
+                ...state,
+                formSending: false,
+                success: true
+            }
+        case 'USERS_CREATE_FAILED' :
+            return {
+                ...state,
+                formSending: false,
+                error: true
             }
         case 'USERS_UPDATE_SUCCESS':
             return {
@@ -23,7 +37,12 @@ const usersReducers = (state = initState, action) => {
                 formSending: false,
                 error: action.err,
             }
-
+        case 'reset' :
+            return {
+                formSending: false,
+                error: false,
+                success:false
+            }
         default:
             return state
     }

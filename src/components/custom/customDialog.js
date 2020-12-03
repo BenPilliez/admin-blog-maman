@@ -1,5 +1,5 @@
 import React from "react"
-import {Dialog, DialogContent, DialogTitle, Slide, Typography} from "@material-ui/core"
+import {Button, Dialog, DialogActions, DialogContent, DialogTitle, Slide, Typography} from "@material-ui/core"
 import PropTypes from 'prop-types'
 import AppBars from "./appBar"
 
@@ -7,10 +7,10 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />
 });
 
-const CustomDialog = ({isOpen, title,fullScreen,fullWidth, handleClose, children}) => {
+const CustomDialog = ({isOpen, title,fullScreen,fullWidth, handleClose, children, dialogActions}) => {
     return (
         <Dialog open={isOpen} fullScreen={fullScreen} fullWidth={fullWidth} TransitionComponent={Transition}>
-            <AppBars handleClose={handleClose}/>
+            {!dialogActions ? <AppBars handleClose={handleClose}/> : null }
             <DialogTitle>
                 <Typography align={"center"}>
                     {title}
@@ -20,6 +20,16 @@ const CustomDialog = ({isOpen, title,fullScreen,fullWidth, handleClose, children
             <DialogContent>
                 {children}
             </DialogContent>
+
+            {dialogActions ? <DialogActions>
+                <Button onClick={handleClose} color="primary">
+                    Annuler
+                </Button>
+                <Button onClick={handleClose} color="primary">
+                    Ok
+                </Button>
+            </DialogActions> : null }
+
         </Dialog>
     )
 }
@@ -27,7 +37,8 @@ const CustomDialog = ({isOpen, title,fullScreen,fullWidth, handleClose, children
 CustomDialog.defaultProps = {
     isOpen: false,
     fullScreen: false,
-    fullWidth: true
+    fullWidth: true,
+    dialogActions: true
 }
 
 CustomDialog.propTypes = {
@@ -36,7 +47,8 @@ CustomDialog.propTypes = {
     fullWidth: PropTypes.bool,
     fullScreen: PropTypes.bool,
     handleClose: PropTypes.func.isRequired,
-    children: PropTypes.element
+    children: PropTypes.element,
+    dialogActions: PropTypes.bool
 }
 
 export default CustomDialog
