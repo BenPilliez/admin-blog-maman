@@ -138,7 +138,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        loadData: (params) => dispatch(loadData(params))
+        loadData: (params) => dispatch(loadData(params)),
     }
 }
 

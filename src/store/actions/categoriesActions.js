@@ -4,6 +4,13 @@ export const formSending = () => {
     }
 }
 
+export const getCategories = () => {
+    return (dispatch, {axiosInstance, toast}) => {
+        axiosInstance({url:`${process.env.REACT_APP_BASE_URL}/category`, method:'GET'})
+            .then()
+    }
+}
+
 export const createCagory = (data) => {
     return (dispatch, getState, {axiosInstance, toast}) => {
         dispatch(formSending())

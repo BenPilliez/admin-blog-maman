@@ -22,3 +22,9 @@ export const loadData = ({url, query}) => {
             })
     }
 }
+
+export const resetRequest = () => {
+    return (dispatch) => {
+        dispatch({type: 'DATA_RESET_STATE'})
+    }
+}

@@ -34,6 +34,16 @@ const Users = (props) => {
     const [userId, setUserId] = React.useState()
     const [needUpdate, setNeedUpdate] = React.useState(false)
 
+    useEffect(() => {
+        if(success){
+            setNeedUpdate(true)
+            reset()
+        }
+        return () => {
+
+        }
+    },[success,setNeedUpdate,reset])
+
     const params = {
         query: {
             perPage: 10, page: 0, order: ['id', 'asc']
@@ -65,12 +75,7 @@ const Users = (props) => {
         },
     ]
 
-    useEffect(() => {
-        if(success){
-            setNeedUpdate(true)
-            reset()
-        }
-    },[success,setNeedUpdate,reset])
+
 
     const deleteAction = (ids) => {
         deleteUser(ids)
@@ -137,7 +142,7 @@ const Users = (props) => {
                         },
                         {
                             label: "membre depuis le: ",
-                            data: (row) => moment(row.createdAt).format('LL')
+                            data: (row) => row.createdAt
                         }
                     ],
                     actions: actions,

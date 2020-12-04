@@ -10,6 +10,7 @@ import ReuseList from "../../custom/list"
 import {makeStyles} from "@material-ui/core/styles"
 import CustomDialog from "../../custom/customDialog"
 import FormCategory from "../category/formCategory"
+import {resetRequest} from "../../../store/actions/handleRequestActions"
 
 
 const useStyle = makeStyles((theme) => ({
@@ -31,6 +32,16 @@ const Categories = (props) => {
     const [edit, setEdit] = React.useState(false)
     const [open, setOpen] = React.useState(false)
     const [needUpdate, setNeedUpdate] = React.useState(false)
+
+    useEffect(() => {
+        if (success) {
+            setNeedUpdate(true)
+            reset()
+        }
+        return () => {
+            reset()
+        }
+    }, [success, setNeedUpdate, reset])
 
     const deleteAction = (ids) => {
         categoryDelete(ids)
@@ -59,13 +70,6 @@ const Categories = (props) => {
         setEdit(false)
         setCategoryId(null)
     }
-
-    useEffect(() => {
-        if (success) {
-            setNeedUpdate(true)
-            reset()
-        }
-    }, [success, setNeedUpdate, reset])
 
     return (
         <div>
@@ -105,7 +109,7 @@ const Categories = (props) => {
                     text: {
                         data: (row) => row.name
                     },
-                    secondaryText: [{label: "crée le ", data: (row) => moment(row.createdAt).format('LL')}],
+                    secondaryText: [{label: "crée le ", data: (row) => row.createdAt}],
                     actions: actions,
                     deleteAction: deleteAction,
                     params: {
@@ -140,7 +144,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         categoryDelete: (ids) => dispatch(deleteCategory(ids)),
-        reset: () => dispatch(resetState())
+        reset: () => dispatch(resetState()),
+        resetRequestHandler: () => dispatch(resetRequest())
     }
 }
 

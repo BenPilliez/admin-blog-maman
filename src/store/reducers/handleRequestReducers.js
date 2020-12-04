@@ -10,7 +10,7 @@ const initState = {
     loadingError: false
 }
 
-export const handleRequestReducers = (state = initState, action) => {
+const handleRequestReducers = (state = initState, action) => {
 
     switch (action.type) {
         case 'DATA_LOADING' :
@@ -35,6 +35,13 @@ export const handleRequestReducers = (state = initState, action) => {
                     currentPage: action.data.currentPage
                 },
                 data: action.data.items
+            }
+        case 'DATA_RESET_STATE':
+            console.log("RESET_REQUEST")
+            return {
+                loaded: false,
+                pagination: null,
+                data: null
             }
         default:
             return state
