@@ -39,6 +39,7 @@ const ReuseTable = (props) => {
         if(!isMounted || needUpdate){
             loadData(params)
             setIsMounted(true)
+            setSelected([])
         }
     }, [loadData,isMounted, needUpdate, params])
 

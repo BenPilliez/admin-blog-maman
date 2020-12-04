@@ -46,15 +46,13 @@ const FormUser = (props) => {
     const [showPassword, setShowPassword] = React.useState(false)
     const [showConfirmPassword, setShowConfirmPassword] = React.useState(false)
 
-    console.log(handleUpdate)
-
     useEffect(() => {
         if (success) {
             handleDialogClose()
             handleUpdate()
             reset()
         }
-    }, [success])
+    }, [success,handleDialogClose,handleUpdate,reset])
 
     const defaultValue = user ? {
         email: user.email,

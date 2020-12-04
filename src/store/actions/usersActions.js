@@ -47,12 +47,15 @@ export const updateUser = (data, userId) => {
 }
 
 export const deleteUsers = (ids) => {
-    return (dispatch, getState, {axioInstance}) => {
-        axioInstance({url: `${process.env.REACT_APP_BASE_URL}/users`, data: ids, method: 'DELETE'})
+    return (dispatch, getState, {axiosInstance, toast}) => {
+        axiosInstance({url: `${process.env.REACT_APP_BASE_URL}/users`, data: {id:ids}, method: 'DELETE'})
             .then(res => {
-                console.log(res)
+                toast.success('Utilisateur(s) supprimé(s)')
+                dispatch({type: 'USERS_DELETE_SUCCESS'})
             }).catch(err => {
             console.error(err)
+            toast.error('Oops on a eu problème pendant la suppression')
+            dispatch({type: 'USERS_DELETE_ERROR'})
         })
     }
 }

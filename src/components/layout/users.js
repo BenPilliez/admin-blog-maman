@@ -1,4 +1,5 @@
-import React from "react"
+import React, {useEffect} from "react"
+import {connect} from "react-redux"
 import ReuseTable from "../custom/table/table"
 import ReuseList from "../custom/list"
 import moment from "moment"
@@ -9,6 +10,7 @@ import {Button} from "@material-ui/core"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import FormUser from "./formUser"
 import {makeStyles} from "@material-ui/core/styles"
+import {deleteUsers,resetState} from "../../store/actions/usersActions"
 import UserDetail from "./userDetail"
 
 const useStyle = makeStyles((theme) => ({
@@ -21,10 +23,11 @@ const useStyle = makeStyles((theme) => ({
     }
 }))
 
-const Users = () => {
+const Users = (props) => {
 
     const matches = useMediaQuery((theme) => theme.breakpoints.down('sm') || theme.breakpoints.down('xs'), {noSsr: true})
     const classes = useStyle()
+    const {success, deleteUser,reset} = props
     const [edit, setEdit] = React.useState(false)
     const [open, setOpen] = React.useState(false)
     const [openShow, setOpenShow] = React.useState(false)
@@ -38,8 +41,16 @@ const Users = () => {
         url: 'users'
     }
 
+    useEffect(() => {
+        if(success){
+            setNeedUpdate(true)
+            reset()
+        }
+    },[success,setNeedUpdate,reset])
+
     const deleteAction = (ids) => {
         console.log(ids)
+        deleteUser(ids)
     }
 
     const handleDialogShow = () => {
@@ -117,6 +128,7 @@ const Users = () => {
                     }
                 }}
             /> : <ReuseList
+                needUpdate={needUpdate}
                 options={{
                     text: {data: (row) => row.email},
                     secondaryText: [
@@ -130,14 +142,14 @@ const Users = () => {
                         }
                     ],
                     actions: actions,
-                    deleteAction: deleteAction(),
+                    deleteAction: deleteAction,
                     params: params
                 }
                 }/>}
             <CustomDialog
                 title={edit ? "Editer" : "Créer un utilisateur"}
                 isOpen={open}
-                fullScreen={true}
+                fullScreen={matches}
                 handleClose={handleDialog}
             >
                 <FormUser isEdit={edit} userId={userId} handleUpdate={handleUpdate} handleDialogClose={handleDialog}/>
@@ -160,4 +172,19 @@ const Users = () => {
     )
 }
 
-export default Users
+const mapStateToProps = (state) => {
+    return {
+        success: state.users.success,
+        error: state.users.error
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        deleteUser: (ids) => dispatch(deleteUsers(ids)),
+        reset: () => dispatch(resetState())
+    }
+
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Users)

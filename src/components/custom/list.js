@@ -7,20 +7,25 @@ import {
     ListItemText,
     TablePagination,
     Typography,
-    Paper
+    Paper, ListItemSecondaryAction
 } from "@material-ui/core"
-import {loadData} from "../../store/actions/handleRequestActions";
+import CustomMenu from "../custom/menu"
+import {loadData} from "../../store/actions/handleRequestActions"
 
 
 const ReuseList = (props) => {
 
-    const {options: {text, secondaryText, params}, rows, loadData, pagination, loaded, loadError} = props
+    const {options: {text, secondaryText,actions, deleteAction, params},needUpdate, rows, loadData, pagination, loaded, loadError} = props
     const [page, setPage] = React.useState(params.query.page)
     const [rowsPerPage, setRowsPerPage] = React.useState(params.query.perPage)
+    const [isMounted, setIsMounted] = React.useState(false)
 
     useEffect(() => {
-        loadData(params)
-    }, [loadData, params])
+        if(!isMounted || needUpdate){
+            loadData(params)
+            setIsMounted(true)
+        }
+    }, [loadData,isMounted, needUpdate, params])
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -69,6 +74,9 @@ const ReuseList = (props) => {
                                         </Typography>
                                     </React.Fragment>
                                 }/>
+                                <ListItemSecondaryAction>
+                                    <CustomMenu menuitemlists={actions} userid={row.id} deleteaction={deleteAction} />
+                                </ListItemSecondaryAction>
                         </ListItem>
                     }) : (<RenderItemError />)}
                 </List>

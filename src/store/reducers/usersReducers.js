@@ -37,6 +37,18 @@ const usersReducers = (state = initState, action) => {
                 formSending: false,
                 error: action.err,
             }
+        case 'USERS_DELETE_FAILED' :
+            return {
+                ...state,
+                formSending: false,
+                error: action.err,
+            }
+        case 'USERS_DELETE_SUCCESS' :
+            return {
+                ...state,
+                formSending: false,
+                success: true,
+            }
         case 'reset' :
             return {
                 formSending: false,

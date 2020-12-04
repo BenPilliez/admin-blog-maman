@@ -35,7 +35,7 @@ class App extends React.Component {
                     <main className={classes.content}>
                         <div className="App">
                             <Switch>
-                                <Route component={Users} path={"/"}/>
+                                <Route exact component={Users} path={"/"}/>
                                 <Route component={Categories} path={"/categories"}/>
                                 <Route component={Posts} path={"/posts"}/>
                             </Switch>
