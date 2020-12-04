@@ -6,9 +6,9 @@ import 'react-toastify/dist/ReactToastify.css'
 import {BrowserRouter, Route, Switch} from "react-router-dom"
 import Navigation from "./components/navigations/navigation"
 import Login from "./components/auth/login"
-import Users from "./components/layout/users"
-import Categories from "./components/layout/categories"
-import Posts from "./components/layout/posts"
+import Users from "./components/layout/users/users"
+import Categories from "./components/layout/category/categories"
+import Posts from "./components/layout/posts/posts"
 import {withStyles} from "@material-ui/core"
 
 

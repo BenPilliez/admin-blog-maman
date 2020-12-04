@@ -1,16 +1,16 @@
 import React, {useEffect} from "react"
 import {connect} from "react-redux"
-import ReuseTable from "../custom/table/table"
-import ReuseList from "../custom/list"
+import ReuseTable from "../../custom/table/table"
+import ReuseList from "../../custom/list"
 import moment from "moment"
 import {useMediaQuery} from "@material-ui/core"
 import "moment/locale/fr"
-import CustomDialog from "../custom/customDialog"
+import CustomDialog from "../../custom/customDialog"
 import {Button} from "@material-ui/core"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import FormUser from "./formUser"
 import {makeStyles} from "@material-ui/core/styles"
-import {deleteUsers,resetState} from "../../store/actions/usersActions"
+import {deleteUsers,resetState} from "../../../store/actions/usersActions"
 import UserDetail from "./userDetail"
 
 const useStyle = makeStyles((theme) => ({
@@ -41,22 +41,6 @@ const Users = (props) => {
         url: 'users'
     }
 
-    useEffect(() => {
-        if(success){
-            setNeedUpdate(true)
-            reset()
-        }
-    },[success,setNeedUpdate,reset])
-
-    const deleteAction = (ids) => {
-        console.log(ids)
-        deleteUser(ids)
-    }
-
-    const handleDialogShow = () => {
-        setOpenShow(!openShow)
-    }
-
     const actions = [
         {
             label: 'Voir',
@@ -80,6 +64,21 @@ const Users = (props) => {
             }
         },
     ]
+
+    useEffect(() => {
+        if(success){
+            setNeedUpdate(true)
+            reset()
+        }
+    },[success,setNeedUpdate,reset])
+
+    const deleteAction = (ids) => {
+        deleteUser(ids)
+    }
+
+    const handleDialogShow = () => {
+        setOpenShow(!openShow)
+    }
 
     const handleDialog = () => {
         setOpen(!open)

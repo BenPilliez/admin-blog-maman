@@ -4,10 +4,11 @@ import {
     CircularProgress,
     List,
     ListItem,
+    ListItemSecondaryAction,
     ListItemText,
+    Paper,
     TablePagination,
-    Typography,
-    Paper, ListItemSecondaryAction
+    Typography
 } from "@material-ui/core"
 import CustomMenu from "../custom/menu"
 import {loadData} from "../../store/actions/handleRequestActions"
@@ -15,17 +16,25 @@ import {loadData} from "../../store/actions/handleRequestActions"
 
 const ReuseList = (props) => {
 
-    const {options: {text, secondaryText,actions, deleteAction, params},needUpdate, rows, loadData, pagination, loaded, loadError} = props
+    const {
+        options: {text, secondaryText, actions, deleteAction, params},
+        needUpdate,
+        rows,
+        loadData,
+        pagination,
+        loaded,
+        loadError
+    } = props
     const [page, setPage] = React.useState(params.query.page)
     const [rowsPerPage, setRowsPerPage] = React.useState(params.query.perPage)
     const [isMounted, setIsMounted] = React.useState(false)
 
     useEffect(() => {
-        if(!isMounted || needUpdate){
+        if (!isMounted || needUpdate) {
             loadData(params)
             setIsMounted(true)
         }
-    }, [loadData,isMounted, needUpdate, params])
+    }, [loadData, isMounted, needUpdate, params])
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -41,7 +50,7 @@ const ReuseList = (props) => {
     }
 
     const RenderSecondaryItem = (props) => {
-        const  {item, row} = props
+        const {item, row} = props
         const data = typeof item.data === "function" ? item.data(row) : row[item.label]
         return <span style={{padding: "2px"}}>{item.label} {data}</span>
     }
@@ -61,35 +70,35 @@ const ReuseList = (props) => {
             {loaded ?
                 <Paper>
                     <List>
-                    {!loadError && rows ? rows.map((row, index) => {
-                        return <ListItem key={index}>
-                            <ListItemText
-                                primary={text.data(row)}
-                                secondary={
-                                    <React.Fragment>
-                                        <Typography component={"span"} variant={"body2"}>
-                                            {secondaryText && secondaryText.map((item, index) => {
-                                                return (<RenderSecondaryItem key={index} row={row} item={item} />)
-                                            })}
-                                        </Typography>
-                                    </React.Fragment>
-                                }/>
+                        {!loadError && rows ? rows.map((row, index) => {
+                            return <ListItem key={index}>
+                                <ListItemText
+                                    primary={text.data(row)}
+                                    secondary={
+                                        <React.Fragment>
+                                            <Typography component={"span"} variant={"body2"}>
+                                                {secondaryText && secondaryText.map((item, index) => {
+                                                    return (<RenderSecondaryItem key={index} row={row} item={item}/>)
+                                                })}
+                                            </Typography>
+                                        </React.Fragment>
+                                    }/>
                                 <ListItemSecondaryAction>
-                                    <CustomMenu menuitemlists={actions} userid={row.id} deleteaction={deleteAction} />
+                                    <CustomMenu menuitemlists={actions} userid={row.id} deleteaction={deleteAction}/>
                                 </ListItemSecondaryAction>
-                        </ListItem>
-                    }) : (<RenderItemError />)}
-                </List>
-                <TablePagination
-                    rowsPerPageOptions={[1, 5, 10, 25]}
-                    component="div"
-                    count={pagination.totalItems}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onChangePage={handleChangePage}
-                    onChangeRowsPerPage={handleChangeRowsPerPage}
-                />
-                </Paper> :  <CircularProgress color={"primary"}/> }
+                            </ListItem>
+                        }) : (<RenderItemError/>)}
+                    </List>
+                    <TablePagination
+                        rowsPerPageOptions={[1, 5, 10, 25]}
+                        component="div"
+                        count={pagination.totalItems}
+                        rowsPerPage={rowsPerPage}
+                        page={page}
+                        onChangePage={handleChangePage}
+                        onChangeRowsPerPage={handleChangeRowsPerPage}
+                    />
+                </Paper> : <CircularProgress color={"primary"}/>}
         </div>
     )
 }

@@ -2,9 +2,9 @@ import React, {useEffect} from "react"
 import {Avatar, Button, Chip, Container, Grid, IconButton, InputAdornment, TextField} from "@material-ui/core"
 import Autocomplete from "@material-ui/lab/Autocomplete"
 import {DropzoneArea} from "material-ui-dropzone"
-import CustomDialog from "../custom/customDialog"
-import {converFormToFormData} from "../../helpers/convertFormToFomdata"
-import {createUser, resetState, updateUser} from "../../store/actions/usersActions"
+import CustomDialog from "../../custom/customDialog"
+import {converFormToFormData} from "../../../helpers/convertFormToFomdata"
+import {createUser, resetState, updateUser} from "../../../store/actions/usersActions"
 import {Controller, useForm} from "react-hook-form"
 import {connect} from "react-redux"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
@@ -46,11 +46,15 @@ const FormUser = (props) => {
     const [showPassword, setShowPassword] = React.useState(false)
     const [showConfirmPassword, setShowConfirmPassword] = React.useState(false)
 
+    console.log(success)
+
     useEffect(() => {
-        if (success) {
-            handleDialogClose()
-            handleUpdate()
-            reset()
+        return () => {
+            if(success){
+                handleDialogClose()
+                handleUpdate()
+                reset()
+            }
         }
     }, [success,handleDialogClose,handleUpdate,reset])
 

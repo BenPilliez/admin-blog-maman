@@ -62,6 +62,7 @@ export const deleteUsers = (ids) => {
 
 export const resetState = () => {
     return (dispatch) => {
+        console.log('RESET_STATE')
         dispatch({type: 'reset'})
     }
 }

@@ -1,5 +1,5 @@
 import React from "react"
-import ReuseCardList from "../custom/cardList"
+import ReuseCardList from "../../custom/cardList"
 
 const Posts = () => {
 

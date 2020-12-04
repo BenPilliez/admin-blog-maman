@@ -1,34 +1,36 @@
 const initState = {
-    loading: false,
-    categories: null,
-    pagination: null,
-    loadError: null
+    formSending: false,
+    success: false,
+    error: null
 }
 
 const categoriesReducers = (state = initState, action) => {
     switch (action.type) {
-        case 'CATEGORIES_LOADING' :
+        case 'FORM_SENDING' :
             return {
                 ...state,
-                loading: true,
+                formSending: true,
+                success: false,
+                error: false,
             }
-        case 'CATEGORIES_LOAD_SUCCESS':
+        case 'CATEGORIES_SUCCESS':
             return {
                 ...state,
-                loading: false,
-                pagination: {
-                    totalItems: action.data.totalItems,
-                    totalPage: action.data.totalPages,
-                    limit: action.data.limit,
-                    currentPage: action.data.currentPage
-                },
-                categories: action.data.items
+                formSending: false,
+                success: true
             }
-        case 'CATEGORIES_LOAD_FAILED' :
+        case 'CATEGORIES_FAILED' :
             return {
                 ...state,
-                loadError: 'Oops, on a eu un problème pendant le chargement de la liste',
-                loading: false
+                error: 'Oops, on a eu un problème',
+                formSending: false
+            }
+        case 'CATEGORIES_STATE_RESET':
+            return {
+                ...state,
+                formSending: false,
+                success: false,
+                error: false
             }
         default:
             return state
