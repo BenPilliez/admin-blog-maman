@@ -27,16 +27,20 @@ const styles = makeStyles((theme)=> ({
 const ReuseTable = (props) => {
 
     const classes = styles()
-    const {options: {headCell, params, tableTile, actions, deleteAction}, rows, loadData, pagination, loaded, loadError} = props
+    const {options: {headCell, params, tableTile, actions, deleteAction}, rows, loadData, pagination, loaded, loadError, needUpdate} = props
     const [direction, setDirection] = React.useState(params.query.order[1])
     const [orderBy, setOrderBy] = React.useState(params.query.order[0])
     const [page, setPage] = React.useState(params.query.page)
     const [rowsPerPage, setRowsPerPage] = React.useState(params.query.perPage)
     const [selected, setSelected] = React.useState([])
+    const [isMounted, setIsMounted] = React.useState(false)
 
     useEffect(() => {
-        loadData(params)
-    }, [loadData, params])
+        if(!isMounted || needUpdate){
+            loadData(params)
+            setIsMounted(true)
+        }
+    }, [loadData,isMounted, params])
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -77,7 +81,6 @@ const ReuseTable = (props) => {
                 selected.slice(selectedIndex + 1),
             );
         }
-
         setSelected(newSelected)
     }
 

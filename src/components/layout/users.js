@@ -29,7 +29,7 @@ const Users = () => {
     const [open, setOpen] = React.useState(false)
     const [openShow, setOpenShow] = React.useState(false)
     const [userId, setUserId] = React.useState()
-
+    const [needUpdate, setNeedUpdate] = React.useState(false)
 
     const params = {
         query: {
@@ -53,8 +53,8 @@ const Users = () => {
             action: 'show',
             handler: (id) => {
                 setOpenShow(true)
+                setNeedUpdate(false)
                 setUserId(id)
-
             }
         },
         {
@@ -64,6 +64,7 @@ const Users = () => {
             handler: (id) => {
                 setEdit(true)
                 setOpen(true)
+                setNeedUpdate(false)
                 setUserId(id)
             }
         },
@@ -75,10 +76,14 @@ const Users = () => {
         setUserId(null)
     }
 
+    const handleUpdate = () => {
+        setNeedUpdate(true)
+    }
+
     return (
         <div>
             <Button className={classes.root} color={"primary"} variant={"outlined"} onClick={handleDialog} startIcon={<FontAwesomeIcon icon={"plus"} />}>Créer</Button>
-            {!matches ? <ReuseTable options={
+            {!matches ? <ReuseTable needUpdate={needUpdate} options={
                 {
                     tableTile: 'Utilisateurs',
                     headCell: [
@@ -135,7 +140,7 @@ const Users = () => {
                 fullScreen={true}
                 handleClose={handleDialog}
             >
-                <FormUser isEdit={edit} userId={userId} handleDialogClose={handleDialog}/>
+                <FormUser isEdit={edit} userId={userId} handleUpdate={handleUpdate} handleDialogClose={handleDialog}/>
             </CustomDialog>
 
             <CustomDialog

@@ -38,7 +38,7 @@ const useStyle = makeStyles((theme) => ({
 const FormUser = (props) => {
 
     const options = ['ROLES_USERS', 'ROLES_ALL_ADMIN']
-    const {user, update, create, success, handleDialogClose, reset} = props
+    const {user, update, create, success, handleDialogClose, reset, handleUpdate} = props
     const fixedOptions = user ? ["ROLES_USERS"] : ['ROLES_ALL_ADMIN', 'ROLES_USERS']
     const classes = useStyle()
     const [open, setOpen] = React.useState(false)
@@ -46,9 +46,12 @@ const FormUser = (props) => {
     const [showPassword, setShowPassword] = React.useState(false)
     const [showConfirmPassword, setShowConfirmPassword] = React.useState(false)
 
+    console.log(handleUpdate)
+
     useEffect(() => {
         if (success) {
             handleDialogClose()
+            handleUpdate()
             reset()
         }
     }, [success])

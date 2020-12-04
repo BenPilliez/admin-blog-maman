@@ -1,7 +1,7 @@
 import React from "react"
 import {connect} from "react-redux"
 import {makeStyles} from "@material-ui/core/styles";
-import {Box, Card, CardMedia, Typography} from "@material-ui/core"
+import {Box, CardMedia, Typography} from "@material-ui/core"
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -30,7 +30,6 @@ const UserDetail = (props) => {
                 <Typography variant={"body1"}>Email : {user.email}</Typography>
                 <Typography variant={"body1"}>ROLES: {user.ROLES.join(', ')}</Typography>
                 <Typography variant={"body1"}>D'autre stats sont à venir</Typography>
-
             </Box>
         </Box>
     )
