@@ -35,8 +35,6 @@ const ReuseTable = (props) => {
     const [selected, setSelected] = React.useState([])
     const [isMounted, setIsMounted] = React.useState(false)
 
-    console.log(isMounted, needUpdate)
-
     useEffect(() => {
         if(!isMounted || needUpdate){
             loadData(params)

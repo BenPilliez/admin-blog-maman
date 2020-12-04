@@ -18,7 +18,6 @@ const FormCategory = (props) => {
     const {category, update, create, success, handleDialogClose, reset, handleUpdate} = props
     const classes = useStyle()
 
-
     useEffect(() => {
         return () => {
             if(success){
