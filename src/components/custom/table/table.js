@@ -40,7 +40,7 @@ const ReuseTable = (props) => {
             loadData(params)
             setIsMounted(true)
         }
-    }, [loadData,isMounted, params])
+    }, [loadData,isMounted, needUpdate, params])
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -94,7 +94,7 @@ const ReuseTable = (props) => {
 
             {selected.length > 0 ? (
                 <Tooltip title="Supprimer">
-                    <IconButton aria-label="delete" onClick={deleteAction}>
+                    <IconButton aria-label="delete" onClick={() => deleteAction(selected)}>
                         <FontAwesomeIcon icon={"trash"} color={"red"}/>
                     </IconButton>
                 </Tooltip>

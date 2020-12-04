@@ -46,6 +46,17 @@ export const updateUser = (data, userId) => {
     }
 }
 
+export const deleteUsers = (ids) => {
+    return (dispatch, getState, {axioInstance}) => {
+        axioInstance({url: `${process.env.REACT_APP_BASE_URL}/users`, data: ids, method: 'DELETE'})
+            .then(res => {
+                console.log(res)
+            }).catch(err => {
+            console.error(err)
+        })
+    }
+}
+
 export const resetState = () => {
     return (dispatch) => {
         dispatch({type: 'reset'})

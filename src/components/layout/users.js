@@ -38,8 +38,8 @@ const Users = () => {
         url: 'users'
     }
 
-    const deleteAction = () => {
-        console.log('Delete function')
+    const deleteAction = (ids) => {
+        console.log(ids)
     }
 
     const handleDialogShow = () => {
@@ -107,7 +107,7 @@ const Users = () => {
                         }
                     ],
                     actions: actions,
-                    deleteAction: deleteAction(),
+                    deleteAction: deleteAction,
                     params: {
                         query:
                             {
