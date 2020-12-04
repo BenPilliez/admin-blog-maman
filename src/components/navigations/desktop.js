@@ -5,6 +5,8 @@ import {Drawer, List, ListItem, ListItemIcon, ListItemText, makeStyles} from "@m
 import {Link as RouterLink} from 'react-router-dom'
 import {connect} from "react-redux"
 import {signOut} from "../../store/actions/authActions"
+import { useHistory } from "react-router-dom";
+
 
 const drawerWidth = 240
 
@@ -55,7 +57,8 @@ const DestokNavigation = (props) => {
     const {items,signout} = props
     const classes = useStyle()
     const [open, setOpen] = React.useState(false)
-    const [selectedIndex, setSelectedIndex] = React.useState(0);
+    const history = useHistory()
+    const [selectRoute, setSelectRoute] = React.useState(history.location.pathname);
 
     const handleOpen = () => {
         setOpen(true)
@@ -65,10 +68,9 @@ const DestokNavigation = (props) => {
         setOpen(false)
     }
 
-    const handleMenuItemClick = (event, index, title) => {
-
+    const handleMenuItemClick = (event,link) => {
         setOpen(false)
-        setSelectedIndex(index)
+        setSelectRoute(link)
     }
 
     return (
@@ -90,15 +92,15 @@ const DestokNavigation = (props) => {
             >
                 <List>
                     {items.map((item, index) => {
-                            return <ListItem selected={index === selectedIndex}
-                                             onClick={ item.signout ? signout : (event) => handleMenuItemClick(event, index)}
+                            return <ListItem selected={item.link === selectRoute}
+                                             onClick={ item.signout ? signout : (event) => handleMenuItemClick(event, item.link)}
                                              className={classes.listItem} button={!item.link}
                                              component={item.link ? RouterLink : ""}
                                              to={item.link}
                                              key={index}>
                                 <ListItemIcon><FontAwesomeIcon className={clsx(classes.drawer, {
-                                    [classes.selected]: index === selectedIndex,
-                                    [classes.notSelected]: !index === selectedIndex,
+                                    [classes.selected]: item.link === selectRoute,
+                                    [classes.notSelected]: !item.link === selectRoute,
                                     [classes.logout]: item.signout
                                 })} size="lg" icon={item.icon}/></ListItemIcon>
                                 <ListItemText style={{color: 'white'}} primary={item.title}/>

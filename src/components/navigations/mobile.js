@@ -5,6 +5,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {Link as RouterLink} from "react-router-dom"
 import {signOut} from "../../store/actions/authActions"
 import {connect} from "react-redux"
+import {useHistory} from "react-router-dom"
 
 
 const useStyles = makeStyles((theme) => ({
@@ -22,9 +23,10 @@ const useStyles = makeStyles((theme) => ({
 
 const MobileNavigation = (props) => {
 
+    const history = useHistory()
     const {items, signout} = props
     const classes = useStyles()
-    const [value, setValue] = React.useState(0);
+    const [value, setValue] = React.useState(history.location.pathname);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -43,7 +45,7 @@ const MobileNavigation = (props) => {
             >
                 {items.map((item, index) => {
                     return (
-                        <Tab value={index} key={index} onClick={item.signout ? signout : null} component={item.link ? RouterLink : 'button'}
+                        <Tab value={item.link} key={index} onClick={item.signout ? signout : null} component={item.link ? RouterLink : 'button'}
                              to={item.link}
                              icon={<FontAwesomeIcon color={item.signout ? 'black' : "white"} size={"lg"} icon={item.icon} />} />
                     )
