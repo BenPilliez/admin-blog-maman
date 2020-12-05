@@ -1,7 +1,16 @@
-import React, {useEffect} from "react"
+import React from "react"
 import ReuseCardList from "../../custom/card/cardList"
+import CustomDialog from "../../custom/customDialog";
+import PostDetail from "./postsDetail";
 
 const Posts = (props) => {
+
+    const [openShow, setOpenShow] = React.useState(false)
+    const [postId, setPostId] = React.useState()
+
+    const handleClose = () => {
+        setOpenShow(!openShow)
+    }
 
     return (
         <div>
@@ -10,7 +19,7 @@ const Posts = (props) => {
                     {
                         cardHeader: [{
                             value: true,
-                            avatar: (row) => row.user ? `${process.env.REACT_APP_BASE_PUBLIC_URL}/${row.user.avatar}` : '',
+                            avatar: (row) => `${process.env.REACT_APP_BASE_PUBLIC_URL}/${row.user.avatar}`,
                             title: (row) => row.title,
                             subheader: (row) => row.createdAt,
                             action: [
@@ -34,8 +43,9 @@ const Posts = (props) => {
                             {
                                 label: 'show',
                                 icon: 'eye',
-                                handler: () => {
-                                    console.log("ALLO SALUT")
+                                handler: (id) => {
+                                    setPostId(id)
+                                    setOpenShow(true)
                                 }
                             }
                         ],
@@ -50,6 +60,14 @@ const Posts = (props) => {
                     }
                 }
             />
+
+            <CustomDialog
+                isOpen={openShow}
+                fullScreen={true}
+                handleClose={handleClose}
+                title={'Detail Artcile'}>
+                <PostDetail postId={postId} />
+            </CustomDialog>
         </div>
     )
 

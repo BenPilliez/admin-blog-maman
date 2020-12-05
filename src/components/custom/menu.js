@@ -6,7 +6,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 
 const CustomMenu = (props) => {
 
-    const {menuitemlists,userid,deleteaction} = props
+    const {menuitemlists,id,deleteaction} = props
     const [anchorEl, setAnchorEl] = React.useState(null)
     const open = Boolean(anchorEl)
 
@@ -28,9 +28,9 @@ const CustomMenu = (props) => {
             </IconButton>
             <Menu open={open} keepMounted anchorEl={anchorEl} onClose={handleOpen}>
                     {menuitemlists && menuitemlists.map((item, index) =>
-                        <MenuItem key={index} onClick={ () => {handleOpen(); item.handler(userid)}}>{item.label}</MenuItem>
+                        <MenuItem key={index} onClick={ () => {handleOpen(); item.handler(id)}}>{item.label}</MenuItem>
                     )}
-                    {deleteaction ? <MenuItem onClick={() => {handleOpen(); deleteaction(userid)}}>Supprimer</MenuItem> : null }
+                    {deleteaction ? <MenuItem onClick={() => {handleOpen(); deleteaction(id)}}>Supprimer</MenuItem> : null }
             </Menu>
         </div>
 

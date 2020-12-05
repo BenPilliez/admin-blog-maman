@@ -13,13 +13,13 @@ const useStyle = makeStyles((theme) => ({
 
 const RenderCardActions = (props) => {
 
-    const {actions} = props
+    const {actions,row} = props
     const classes = useStyle()
 
     return (
         <CardActions className={classes.flex}>
             {actions && actions.map((button, index) => {
-                return (<Button onClick={button.handler} size="small" color="primary" key={index} startIcon={button.icon ? <FontAwesomeIcon icon={button.icon} /> : null}>
+                return (<Button onClick={() => button.handler(row.id)} size="small" color="primary" key={index} startIcon={button.icon ? <FontAwesomeIcon icon={button.icon} /> : null}>
                     {button.label}
                 </Button>)
             })}

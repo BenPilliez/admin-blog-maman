@@ -14,21 +14,14 @@ const handleRequestReducers = (state = initState, action) => {
 
     switch (action.type) {
         case 'DATA_LOADING' :
-            console.log("DATA_LOADING")
-
             return initState
-
         case 'DATA_LOADING_ERROR' :
-            console.log("DATA_LOADING_ERROR")
-
             return {
                 ...state,
                 loaded: true,
                 loadingError: 'Oops on a eu un problème en chargeant la liste'
             }
         case 'DATA_LOADING_SUCCESS' :
-            console.log("DATA_LOADING_SUCCESS")
-
             return {
                 ...state,
                 loaded: true,
@@ -41,7 +34,6 @@ const handleRequestReducers = (state = initState, action) => {
                 data: action.data.items
             }
         case 'DATA_RESET_STATE':
-            console.log("RESET_REQUEST")
             return {
                 loaded: false
             }

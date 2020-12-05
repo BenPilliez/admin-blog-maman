@@ -27,15 +27,13 @@ const styles = makeStyles((theme)=> ({
 const ReuseTable = (props) => {
 
     const classes = styles()
-    const {options: {headCell, params, tableTile, actions, deleteAction}, rows, loadData, pagination, loaded, loadError, needUpdate} = props
+    const {options: {headCell, params, tableTile, actions, deleteAction}, rows, loadData, pagination, loadError, needUpdate} = props
     const [direction, setDirection] = React.useState(params.query.order[1])
     const [orderBy, setOrderBy] = React.useState(params.query.order[0])
     const [page, setPage] = React.useState(params.query.page)
     const [rowsPerPage, setRowsPerPage] = React.useState(params.query.perPage)
     const [selected, setSelected] = React.useState([])
     const [isMounted, setIsMounted] = React.useState(false)
-
-    console.log(loaded)
 
     useEffect(() => {
         if(!isMounted || needUpdate){
@@ -107,7 +105,7 @@ const ReuseTable = (props) => {
 
     return (
         <div>
-            {loaded ? <Paper>
+            {isMounted ? <Paper>
                 <CustomToolBar tableName={tableTile}/>
                 <TableContainer component={Paper}>
                     <Table size={"medium"}>
@@ -131,7 +129,6 @@ const ReuseTable = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        loaded: state.request.loaded,
         rows: state.request.data,
         pagination: state.request.pagination,
         loadError: state.request.loadingError

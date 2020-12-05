@@ -14,7 +14,6 @@ const ReuseCardList = (props) => {
         rows,
         loadData,
         pagination,
-        loaded,
         needUpdate,
         loadError
     } = props
@@ -25,17 +24,10 @@ const ReuseCardList = (props) => {
 
     useEffect(() => {
         if (!isMounted || needUpdate) {
-            console.log('allo')
             loadData(params)
             setIsMounted(true)
         }
     }, [loadData, isMounted, needUpdate, params])
-
-    useEffect(() => {
-        return () => {
-            setIsMounted(false)
-        }
-    }, [setIsMounted])
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -53,30 +45,30 @@ const ReuseCardList = (props) => {
     return (
         <div>
             {isMounted ? <div>
-                    <Grid container>
-                        {rows && rows.map((row, index) => {
-                            return (<Grid item key={index} xs={12} lg={3} md={3} sm={12}>
-                                <Card>
-                                    {cardHeader && cardHeader.length > 0 ?
-                                        <RenderCardHeader headerCard={cardHeader} row={row}/> : null}
-                                    {cardMedia ? <RenderCardMedia media={cardMedia} row={row}/> : null}
-                                    <RenderCardContent content={cardContent} row={row}/>
-                                    {cardActions && cardActions.length > 0 ?
-                                        <RenderCardActions actions={cardActions}/> : null}
-                                </Card>
-                            </Grid>)
-                        })}
-                    </Grid>
-                    <TablePagination
-                        rowsPerPageOptions={[1, 5, 10, 25]}
-                        component="div"
-                        count={pagination.totalItems}
-                        rowsPerPage={rowsPerPage}
-                        page={page}
-                        onChangePage={handleChangePage}
-                        onChangeRowsPerPage={handleChangeRowsPerPage}
-                    />
-                </div> : <CircularProgress color={"primary"}/>}
+                <Grid container>
+                    {!loadError && rows ? rows.map((row, index) => {
+                        return (<Grid item key={index} xs={12} lg={3} md={3} sm={12}>
+                            <Card>
+                                {cardHeader && cardHeader.length > 0 ?
+                                    <RenderCardHeader headerCard={cardHeader} row={row}/> : null}
+                                {cardMedia ? <RenderCardMedia media={cardMedia} row={row}/> : null}
+                                <RenderCardContent content={cardContent} row={row}/>
+                                {cardActions && cardActions.length > 0 ?
+                                    <RenderCardActions row={row} actions={cardActions}/> : null}
+                            </Card>
+                        </Grid>)
+                    }) : <div>{loadError}</div>}
+                </Grid>
+                <TablePagination
+                    rowsPerPageOptions={[1, 5, 10, 25]}
+                    component="div"
+                    count={pagination.totalItems}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onChangePage={handleChangePage}
+                    onChangeRowsPerPage={handleChangeRowsPerPage}
+                />
+            </div> : <CircularProgress color={"primary"}/>}
         </div>
     )
 }

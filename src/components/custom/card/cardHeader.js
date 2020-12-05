@@ -17,7 +17,7 @@ const RenderCardHeader = (props) => {
                     avatar={item.avatar ? <Avatar src={ReturnData(item.avatar)}/> : null}
                     title={item.title ? ReturnData(item.title) : null}
                     subheader={item.subheader ? ReturnData(item.subheader) : null}
-                    action={item.action ? <CustomMenu menuitemlists={item.action}/> : null}
+                    action={item.action ? <CustomMenu id={row.id} menuitemlists={item.action}/> : null}
                 />
             })}
         </React.Fragment>

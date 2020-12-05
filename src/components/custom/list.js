@@ -15,13 +15,10 @@ import {loadData} from "../../store/actions/handleRequestActions"
 
 const ReuseList = (props) => {
 
-    const {options: {text, secondaryText,actions, deleteAction, params},needUpdate, rows, loadData, pagination, loaded, loadError} = props
+    const {options: {text, secondaryText,actions, deleteAction, params},needUpdate, rows, loadData, pagination, loadError} = props
     const [page, setPage] = React.useState(params.query.page)
     const [rowsPerPage, setRowsPerPage] = React.useState(params.query.perPage)
     const [isMounted, setIsMounted] = React.useState(false)
-
-
-    console.log(loaded)
 
     useEffect(() => {
         if(!isMounted || needUpdate){
@@ -58,7 +55,7 @@ const ReuseList = (props) => {
             </ListItem>
         )
     }
-        console.log(isMounted)
+
     return (
         <div>
             {isMounted ?
@@ -78,7 +75,7 @@ const ReuseList = (props) => {
                                     </React.Fragment>
                                 }/>
                                 <ListItemSecondaryAction>
-                                    <CustomMenu menuitemlists={actions} userid={row.id} deleteaction={deleteAction} />
+                                    <CustomMenu menuitemlists={actions} id={row.id} deleteaction={deleteAction} />
                                 </ListItemSecondaryAction>
 
                         </ListItem>
@@ -100,7 +97,6 @@ const ReuseList = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        loaded: state.request.loaded,
         rows: state.request.data,
         pagination: state.request.pagination,
         loadError: state.request.loadingError

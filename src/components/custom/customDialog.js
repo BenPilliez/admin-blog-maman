@@ -36,7 +36,6 @@ const CustomDialog = ({isOpen, title,fullScreen,fullWidth, handleClose, children
 }
 
 CustomDialog.defaultProps = {
-    isOpen: false,
     fullScreen: false,
     fullWidth: true
 }
