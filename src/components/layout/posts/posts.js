@@ -60,7 +60,6 @@ const Posts = (props) => {
                     }
                 }
             />
-
             <CustomDialog
                 isOpen={openShow}
                 fullScreen={true}
