@@ -3,10 +3,6 @@ import ReuseCardList from "../../custom/card/cardList"
 
 const Posts = (props) => {
 
-    useEffect(() => {
-        console.log("bonjour")
-    })
-
     return (
         <div>
             <ReuseCardList
@@ -14,7 +10,7 @@ const Posts = (props) => {
                     {
                         cardHeader: [{
                             value: true,
-                            avatar: (row) => `${process.env.REACT_APP_BASE_PUBLIC_URL}/${row.user.avatar}`,
+                            avatar: (row) => row.user ? `${process.env.REACT_APP_BASE_PUBLIC_URL}/${row.user.avatar}` : '',
                             title: (row) => row.title,
                             subheader: (row) => row.createdAt,
                             action: [

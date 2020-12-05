@@ -9,7 +9,7 @@ import {loadData} from "../../../store/actions/handleRequestActions"
 
 
 const ReuseCardList = (props) => {
-    const {
+    let {
         options: {cardMedia, cardHeader, cardContent, cardActions, params},
         rows,
         loadData,
@@ -25,10 +25,17 @@ const ReuseCardList = (props) => {
 
     useEffect(() => {
         if (!isMounted || needUpdate) {
+            console.log('allo')
             loadData(params)
             setIsMounted(true)
         }
     }, [loadData, isMounted, needUpdate, params])
+
+    useEffect(() => {
+        return () => {
+            setIsMounted(false)
+        }
+    }, [setIsMounted])
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -45,7 +52,7 @@ const ReuseCardList = (props) => {
 
     return (
         <div>
-            {loaded ? <div>
+            {isMounted ? <div>
                     <Grid container>
                         {rows && rows.map((row, index) => {
                             return (<Grid item key={index} xs={12} lg={3} md={3} sm={12}>

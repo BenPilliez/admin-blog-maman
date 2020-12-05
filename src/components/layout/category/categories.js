@@ -38,10 +38,9 @@ const Categories = (props) => {
             setNeedUpdate(true)
             reset()
         }
-        return () => {
-            reset()
-        }
+
     }, [success, setNeedUpdate, reset])
+
 
     const deleteAction = (ids) => {
         categoryDelete(ids)

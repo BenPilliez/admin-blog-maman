@@ -12,6 +12,7 @@ import FormUser from "./formUser"
 import {makeStyles} from "@material-ui/core/styles"
 import {deleteUsers,resetState} from "../../../store/actions/usersActions"
 import UserDetail from "./userDetail"
+import {resetRequest} from "../../../store/actions/handleRequestActions";
 
 const useStyle = makeStyles((theme) => ({
     root: {
@@ -38,9 +39,6 @@ const Users = (props) => {
         if(success){
             setNeedUpdate(true)
             reset()
-        }
-        return () => {
-
         }
     },[success,setNeedUpdate,reset])
 

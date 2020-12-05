@@ -20,6 +20,9 @@ const ReuseList = (props) => {
     const [rowsPerPage, setRowsPerPage] = React.useState(params.query.perPage)
     const [isMounted, setIsMounted] = React.useState(false)
 
+
+    console.log(loaded)
+
     useEffect(() => {
         if(!isMounted || needUpdate){
             loadData(params)
@@ -55,10 +58,10 @@ const ReuseList = (props) => {
             </ListItem>
         )
     }
-
+        console.log(isMounted)
     return (
         <div>
-            {loaded ?
+            {isMounted ?
                 <Paper>
                     <List>
                     {!loadError && rows ? rows.map((row, index) => {

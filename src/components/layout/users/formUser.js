@@ -46,8 +46,6 @@ const FormUser = (props) => {
     const [showPassword, setShowPassword] = React.useState(false)
     const [showConfirmPassword, setShowConfirmPassword] = React.useState(false)
 
-    console.log(success)
-
     useEffect(() => {
         return () => {
             if(success){
