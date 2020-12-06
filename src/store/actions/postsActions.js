@@ -1,5 +1,5 @@
 export const formSending = () => {
-    return (dispatch ) => {
+    return (dispatch) => {
         dispatch({type: 'POST_FORM_SENDING'})
     }
 }
@@ -8,7 +8,7 @@ export const formSending = () => {
 export const createPost = (data) => {
     return (dispatch, getState, {axiosInstance, toast}) => {
         dispatch(formSending())
-        axiosInstance({url: `${process.env.REACT_APP_BASE_URL}/posts`, data:data, method:'POST'})
+        axiosInstance({url: `${process.env.REACT_APP_BASE_URL}/posts`, data: data, method: 'POST'})
             .catch(res => {
                 toast.success('Post ajouté')
                 dispatch({type: 'POST_SUCCESS'})
@@ -21,12 +21,12 @@ export const createPost = (data) => {
 }
 
 export const updatePost = (data, id) => {
-    return (dispatch, getState, {axiosInstance, toast}) =>{
+    return (dispatch, getState, {axiosInstance, toast}) => {
         dispatch(formSending())
-        axiosInstance({url: `${process.env.REACT_APP_BASE_URL}/posts/${id}`, data:data, method:'PUT',
-        headers:{
-
-        }})
+        axiosInstance({
+            url: `${process.env.REACT_APP_BASE_URL}/posts/${id}`, data: data, method: 'PUT',
+            headers: {}
+        })
             .then(res => {
                 toast.success('Mise à jour effectuée')
                 dispatch({type: 'POST_SUCCESS'})
@@ -38,12 +38,20 @@ export const updatePost = (data, id) => {
     }
 }
 
-export const setPublished = (id) => {
-    return (dispatch, getState, {axiosInstance, toast}) =>{
-        axiosInstance({url: `${process.env.REACT_APP_BASE_URL}/published/${id}`, method:'PUT'})
+export const setPublished = (id, value) => {
+    return (dispatch, getState, {axiosInstance, toast}) => {
+        axiosInstance({
+            url: `${process.env.REACT_APP_BASE_URL}/posts/published/${id}`,
+            data: {published: value},
+            method: 'PUT'
+        })
             .then(res => {
-                toast.success('Post publié')
-                dispatch({type:'POST_SUCCESS'})
+                if (res.data.published === false) {
+                    toast.success('Post hors ligne')
+                } else {
+                    toast.success('Post publié')
+                }
+                dispatch({type: 'POST_SUCCESS'})
             })
             .catch(err => {
                 toast.error('Oops on a un problème')
@@ -53,8 +61,8 @@ export const setPublished = (id) => {
 }
 
 export const deletePost = (id) => {
-    return (dispatch, getState,{axiosInstance, toast})=> {
-        axiosInstance({url: `${process.env.REACT_APP_BASE_URL}/posts/${id}`, method:'DELETE'})
+    return (dispatch, getState, {axiosInstance, toast}) => {
+        axiosInstance({url: `${process.env.REACT_APP_BASE_URL}/posts/${id}`, method: 'DELETE'})
             .then(res => {
                 toast.success('Post supprimé')
                 dispatch({type: 'POST_SUCCESS'})

@@ -9,8 +9,6 @@ import {Controller, useForm} from "react-hook-form"
 import {connect} from "react-redux"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {makeStyles} from "@material-ui/core/styles"
-import {green} from "@material-ui/core/colors";
-
 
 const useStyle = makeStyles((theme) => ({
     flex: {
@@ -24,14 +22,6 @@ const useStyle = makeStyles((theme) => ({
     wrapper: {
         position: 'relative',
         margin: theme.spacing(1)
-    },
-    buttonProgress: {
-        color: green[500],
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        marginTop: -12,
-        marginLeft: -12
     }
 }))
 
@@ -58,6 +48,7 @@ const FormUser = (props) => {
 
     const defaultValue = user ? {
         email: user.email,
+        username: user.username,
         avatar: user.avatar,
         ROLES: user.ROLES,
         password: '',
@@ -65,6 +56,7 @@ const FormUser = (props) => {
         deleteAvatar: false
     } : {
         email: '',
+        username: '',
         avatar: '',
         password: '',
         confirmPassword: '',
@@ -124,6 +116,39 @@ const FormUser = (props) => {
                                 <TextField
                                     variant="outlined"
                                     margin="normal"
+                                    error={!!errors.username && !!errors.username.message}
+                                    required
+                                    fullWidth
+                                    id="username"
+                                    label="Pseudo"
+                                    name="username"
+                                    onChange={props.onChange}
+                                    value={props.value}
+                                    inputRef={props.ref}
+                                    autoFocus
+                                />
+                            )}
+                            name="username"
+                            control={control}
+                            rules={{
+                                required: {
+                                    value: true,
+                                    message: "Sans pseudo c'est compliqué"
+                                }
+                            }}
+                        />
+
+                        {errors.usernames && (
+                            <div className="error">{errors.username.message}</div>
+                        )}
+
+                    </Grid>
+                    <Grid item xs={12} lg={12} md={12}>
+                        <Controller
+                            render={(props) => (
+                                <TextField
+                                    variant="outlined"
+                                    margin="normal"
                                     error={!!errors.email && !!errors.email.message}
                                     required
                                     fullWidth
@@ -133,7 +158,6 @@ const FormUser = (props) => {
                                     onChange={props.onChange}
                                     value={props.value}
                                     inputRef={props.ref}
-                                    autoFocus
                                 />
                             )}
                             name="email"

@@ -25,8 +25,9 @@ const UserDetail = (props) => {
 
     return (
         <Box className={classes.root}>
-            <CardMedia className={classes.media} image={`${process.env.REACT_APP_BASE_PUBLIC_URL}/${user.avatar}`} />
+            <CardMedia className={classes.media} image={`${process.env.REACT_APP_BASE_PUBLIC_URL}/${user.avatar}`}/>
             <Box className={classes.flexColumn}>
+                <Typography variant={"body1"}>Pseudo: {user.username}</Typography>
                 <Typography variant={"body1"}>Email : {user.email}</Typography>
                 <Typography variant={"body1"}>ROLES: {user.ROLES.join(', ')}</Typography>
                 <Typography variant={"body1"}>D'autre stats sont à venir</Typography>
@@ -40,7 +41,7 @@ const mapStateToProps = (state, ownProps) => {
         return item.id === ownProps.userId
     })
 
-    return{
+    return {
         user: user
     }
 }

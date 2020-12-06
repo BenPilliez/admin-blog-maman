@@ -5,12 +5,13 @@ import RenderCardHeader from "./cardHeader"
 import RenderCardContent from "./cardContent"
 import RenderCardMedia from "./cardMedia"
 import RenderCardActions from "./cardActions"
+import RenderCardSwitch from "./cardSwitch"
 import {loadData} from "../../../store/actions/handleRequestActions"
 
 
 const ReuseCardList = (props) => {
     let {
-        options: {cardMedia, cardHeader, cardContent, cardActions, params},
+        options: {cardMedia, cardHeader, cardContent, cardActions, cardSwitch, params},
         rows,
         loadData,
         pagination,
@@ -55,6 +56,7 @@ const ReuseCardList = (props) => {
                                 <RenderCardContent content={cardContent} row={row}/>
                                 {cardActions && cardActions.length > 0 ?
                                     <RenderCardActions row={row} actions={cardActions}/> : null}
+                                {cardSwitch ? <RenderCardSwitch row={row} switchButton={cardSwitch}/> : null}
                             </Card>
                         </Grid>)
                     }) : <div>{loadError}</div>}

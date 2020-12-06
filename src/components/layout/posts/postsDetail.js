@@ -12,10 +12,9 @@ const useStyle = makeStyles((theme) => ({
 }))
 
 const PostDetail = (props) => {
+
     const {post} = props
     const classes = useStyle()
-
-    console.log(post)
 
     return (
         <React.Fragment>
@@ -40,17 +39,15 @@ const PostDetail = (props) => {
 
                     <Grid item xs={12}>
                         <Typography variant={"caption"} color={"textSecondary"}>
-                            {post.createdAt}, {post.user.email},
+                            {post.createdAt}, {post.user.username},
                             status: {post.published === false ? 'Non publié' : 'Publié'}
                         </Typography>
                     </Grid>
                 </Grid>
             </Container>
-
         </React.Fragment>
     )
 }
-
 const mapStateTopProps = (state, ownProps) => {
     const post = state.request.data.find(((item) => {
         return item.id === ownProps.postId
