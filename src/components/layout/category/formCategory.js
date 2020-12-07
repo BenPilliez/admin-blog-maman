@@ -1,5 +1,5 @@
 import React, {useEffect} from "react"
-import {createCagory, resetState, updateCategory} from "../../../store/actions/categoriesActions"
+import {createCategory, resetState, updateCategory} from "../../../store/actions/categoriesActions"
 import {connect} from "react-redux"
 import {Controller} from "react-hook-form"
 import {useForm} from "react-hook-form"
@@ -114,7 +114,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         update: (data, id) => dispatch(updateCategory(data, id)),
-        create: (data) => dispatch(createCagory(data)),
+        create: (data) => dispatch(createCategory(data)),
         reset: () => dispatch(resetState())
     }
 }

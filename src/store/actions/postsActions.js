@@ -9,7 +9,7 @@ export const createPost = (data) => {
     return (dispatch, getState, {axiosInstance, toast}) => {
         dispatch(formSending())
         axiosInstance({url: `${process.env.REACT_APP_BASE_URL}/posts`, data: data, method: 'POST'})
-            .catch(res => {
+            .then(res => {
                 toast.success('Post ajouté')
                 dispatch({type: 'POST_SUCCESS'})
             })

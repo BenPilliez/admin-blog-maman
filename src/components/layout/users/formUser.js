@@ -1,6 +1,5 @@
 import React, {useEffect} from "react"
-import {Avatar, Button, Chip, Container, Grid, IconButton, InputAdornment, TextField} from "@material-ui/core"
-import Autocomplete from "@material-ui/lab/Autocomplete"
+import {Avatar, Button, Container, Grid, IconButton, InputAdornment, TextField} from "@material-ui/core"
 import {DropzoneArea} from "material-ui-dropzone"
 import CustomDialog from "../../custom/customDialog"
 import {converFormToFormData} from "../../../helpers/convertFormToFomdata"
@@ -9,6 +8,7 @@ import {Controller, useForm} from "react-hook-form"
 import {connect} from "react-redux"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {makeStyles} from "@material-ui/core/styles"
+import CustomAutocomplete from "../../custom/autocomplete"
 
 const useStyle = makeStyles((theme) => ({
     flex: {
@@ -38,13 +38,13 @@ const FormUser = (props) => {
 
     useEffect(() => {
         return () => {
-            if(success){
+            if (success) {
                 handleDialogClose()
                 handleUpdate()
                 reset()
             }
         }
-    }, [success,handleDialogClose,handleUpdate,reset])
+    }, [success, handleDialogClose, handleUpdate, reset])
 
     const defaultValue = user ? {
         email: user.email,
@@ -181,35 +181,19 @@ const FormUser = (props) => {
                     <Grid item xs={12} lg={12} md={12}>
                         <Controller
                             render={({onChange, ...props}) => (
-                                <Autocomplete
-                                    multiple
-                                    id="roles"
-                                    variant="outlined"
-                                    style={{
-                                        marginTop: '16px',
-                                        marginBottom: '8px'
-                                    }}
-                                    fullWidth
+                                <CustomAutocomplete
+                                    multiple={true}
                                     value={props.value}
-                                    onChange={(event, newValue) => {
+                                    change={(newValue) => {
                                         const value = [...fixedOptions, ...newValue.filter((option) => fixedOptions.indexOf(option) === -1)]
                                         onChange(value)
                                     }}
+                                    optionLabel={(option) => option}
+                                    optionSelected={(option) => option}
+                                    fixedOptions={fixedOptions}
                                     options={options}
-                                    getOptionLabel={(option) => option}
-                                    renderTags={(tagValue, getTagProps) =>
-                                        tagValue.map((option, index) => (
-                                            <Chip
-                                                label={option}
-                                                {...getTagProps({index})}
-                                                disabled={fixedOptions.indexOf(option) !== -1}
-                                            />
-                                        ))
-                                    }
-                                    renderInput={(params) => (
-                                        <TextField {...params} label="Roles" variant="outlined" placeholder="Roles"/>
-                                    )}
-                                />
+                                    label={"Roles"}
+                                    id={"RolesSelect"}/>
                             )}
                             name="ROLES"
                             onChange={([, data]) => data}
@@ -323,7 +307,8 @@ const FormUser = (props) => {
                             )}
                         </Grid>
                     </>) : null}
-                    <CustomDialog isOpen={open} handleClose={handleClose} title={"Avatar"} dialogActions={[{label: 'Annuler'}, {label: 'Ok'}]}>
+                    <CustomDialog isOpen={open} handleClose={handleClose} title={"Avatar"}
+                                  dialogActions={[{label: 'Annuler'}, {label: 'Ok'}]}>
                         <Controller
                             render={(props) => {
                                 return <DropzoneArea

@@ -44,12 +44,12 @@ const ReuseCardList = (props) => {
     }
 
     return (
-        <div>
-            {isMounted ? <div>
+        <React.Fragment>
+            {isMounted ? <React.Fragment>
                 <Grid container>
                     {!loadError && rows ? rows.map((row, index) => {
-                        return (<Grid item key={index} xs={12} lg={3} md={3} sm={12}>
-                            <Card>
+                        return (<Grid style={{padding: 10}} item key={index} xs={12} lg={3} md={3} sm={12}>
+                            <Card >
                                 {cardHeader && cardHeader.length > 0 ?
                                     <RenderCardHeader headerCard={cardHeader} row={row}/> : null}
                                 {cardMedia ? <RenderCardMedia media={cardMedia} row={row}/> : null}
@@ -70,8 +70,8 @@ const ReuseCardList = (props) => {
                     onChangePage={handleChangePage}
                     onChangeRowsPerPage={handleChangeRowsPerPage}
                 />
-            </div> : <CircularProgress color={"primary"}/>}
-        </div>
+            </React.Fragment> : <CircularProgress color={"primary"}/>}
+        </React.Fragment>
     )
 }
 
