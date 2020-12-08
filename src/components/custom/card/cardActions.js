@@ -16,7 +16,6 @@ const RenderCardActions = (props) => {
 
     const {actions, row} = props
     const classes = useStyle()
-    const [checked, setChecked] = React.useState(row.published)
 
 
     const RenderActions = (props) => {

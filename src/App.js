@@ -9,6 +9,7 @@ import Login from "./components/auth/login"
 import Users from "./components/layout/users/users"
 import Categories from "./components/layout/category/categories"
 import Posts from "./components/layout/posts/posts"
+import Comments from "./components/layout/comments/comments"
 import {withStyles} from "@material-ui/core"
 
 
@@ -38,6 +39,7 @@ class App extends React.Component {
                                 <Route exact component={Users} path={"/"}/>
                                 <Route component={Categories} path={"/categories"}/>
                                 <Route component={Posts} path={"/posts"}/>
+                                <Route component={Comments} path={"/comments"} />
                             </Switch>
                         </div>
                         <ToastContainer/>

@@ -13,7 +13,6 @@ import {Provider} from 'react-redux'
 import {axiosInstance, setAuthorization} from "./config/axiosConfig"
 import {localStorageTokenConfig} from "./config/localStorageToken";
 import theme from "./config/theme"
-import "draft-js/dist/Draft.css"
 import {toast} from "react-toastify";
 import {library} from '@fortawesome/fontawesome-svg-core'
 import {faComment, faFolder, faLock, faNewspaper, faSignOutAlt, faUser, faTrash, faEdit, faEye, faTimes, faEyeSlash, faPlus,faEllipsisV} from '@fortawesome/free-solid-svg-icons'

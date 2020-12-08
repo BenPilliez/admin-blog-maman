@@ -1,5 +1,14 @@
 import React from "react"
-import {Button, Checkbox, TableBody, TableCell, TableRow} from "@material-ui/core"
+import {
+    Button,
+    Checkbox,
+    FormControl,
+    FormControlLabel,
+    Switch,
+    TableBody,
+    TableCell,
+    TableRow
+} from "@material-ui/core"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 
 const RenderTableBody = (props) => {
@@ -25,16 +34,19 @@ const RenderTableBody = (props) => {
     }
 
     const RenderTableAction = (props) => {
-        const {action, id} = props
-        return (
-            <TableCell>
-                <Button color={"primary"}
-                        onClick={() => action.handler(id)}
-                        startIcon={<FontAwesomeIcon icon={action.icon}/>}>
-                    {action.label}
-                </Button>
-            </TableCell>
-        )
+        const {action,row, id} = props
+
+        if (action.type !== 'switch') {
+            return (
+                <TableCell>
+                    <Button color={"primary"}
+                            onClick={() => action.handler(id)}
+                            startIcon={<FontAwesomeIcon icon={action.icon}/>}>
+                        {action.label}
+                    </Button>
+                </TableCell>
+            )
+        }
     }
 
     return (
@@ -64,7 +76,7 @@ const RenderTableBody = (props) => {
                         })}
 
                         {actions && actions.map((action, key) => {
-                            return <RenderTableAction key={key} action={action} id={row.id}/>
+                            return <RenderTableAction key={key} action={action} row={row} id={row.id}/>
 
                         })}
 
