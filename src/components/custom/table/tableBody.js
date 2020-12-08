@@ -1,52 +1,47 @@
 import React from "react"
-import {
-    Button,
-    Checkbox,
-    FormControl,
-    FormControlLabel,
-    Switch,
-    TableBody,
-    TableCell,
-    TableRow
-} from "@material-ui/core"
+import {Button, Checkbox, TableBody, TableCell, TableRow} from "@material-ui/core"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
+import TableSwitch from "./tableSwitch";
 
 const RenderTableBody = (props) => {
 
     const {loadError, rows, selected, handleSelect, headCell, actions} = props
     const isSelected = (id) => selected.indexOf(id) !== -1;
 
-    const RenderTableError = () => {
-        return (
-            <TableRow>
-                <TableCell>{loadError}</TableCell>
-            </TableRow>
-        )
-    }
 
     const RenderTableRow = (props) => {
         const {row, option} = props
 
         const data = option.data && typeof option.data === "function" ? option.data(row) : row[option.label]
+
+        if (option.type === "switch") {
+            return (
+                <TableCell>
+                    <TableSwitch
+                        id={row.id}
+                        option={option}
+                        data={data}
+                        row={row}
+                        handler={option.handler}/>
+                </TableCell>)
+        }
         return (
             <TableCell>{data}</TableCell>
         )
     }
 
     const RenderTableAction = (props) => {
-        const {action,row, id} = props
+        const {action, id} = props
 
-        if (action.type !== 'switch') {
-            return (
-                <TableCell>
-                    <Button color={"primary"}
-                            onClick={() => action.handler(id)}
-                            startIcon={<FontAwesomeIcon icon={action.icon}/>}>
-                        {action.label}
-                    </Button>
-                </TableCell>
-            )
-        }
+        return (
+            <TableCell>
+                <Button color={"primary"}
+                        onClick={() => action.handler(id)}
+                        startIcon={<FontAwesomeIcon icon={action.icon}/>}>
+                    {action.label}
+                </Button>
+            </TableCell>
+        )
     }
 
     return (
@@ -82,7 +77,7 @@ const RenderTableBody = (props) => {
 
                     </TableRow>
                 )
-            }) : (<RenderTableError/>)}
+            }) : null }
         </TableBody>
     )
 }

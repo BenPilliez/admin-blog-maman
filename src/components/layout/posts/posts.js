@@ -45,11 +45,10 @@ const Posts = (props) => {
     }
 
     useEffect(() => {
-        if (success) {
-            setNeedUpdate(true)
+        if (success && needUpdate) {
             reset()
         }
-    }, [success, setNeedUpdate])
+    }, [success, needUpdate])
 
     return (
         <React.Fragment>
@@ -78,6 +77,7 @@ const Posts = (props) => {
                                     label: 'Supprimer',
                                     handler: (id) => {
                                         deletePost(id)
+                                        setNeedUpdate(true)
                                     }
                                 }
                             ]
@@ -101,6 +101,7 @@ const Posts = (props) => {
                             type: 'switch',
                             handler: (id, value) => {
                                 published(id, value)
+                                setNeedUpdate(false)
                             }
                         },
                         params: {

@@ -3,6 +3,7 @@ import usersReducers from "./usersReducers"
 import categoriesReducers from "./categoriesReducers"
 import handleRequestReducers from "./handleRequestReducers"
 import postsReducers from "./postsReducers"
+import commentsReducers from "./commentsReducers"
 import {combineReducers} from "redux"
 
 const rootReducer = combineReducers({
@@ -10,7 +11,8 @@ const rootReducer = combineReducers({
     users: usersReducers,
     categories: categoriesReducers,
     request: handleRequestReducers,
-    posts: postsReducers
+    posts: postsReducers,
+    comments: commentsReducers
 })
 
 export default rootReducer

@@ -4,9 +4,9 @@ export const loading = () => {
     }
 }
 
-export const loadingError = () => {
+export const loadingError = (status) => {
     return (dispatch) => {
-        dispatch({type: "DATA_LOADING_ERROR"})
+        dispatch({type: "DATA_LOADING_ERROR", status})
     }
 }
 
@@ -18,7 +18,7 @@ export const loadData = ({url, query}) => {
                 dispatch({type: "DATA_LOADING_SUCCESS", data: res.data})
             })
             .catch(err => {
-                dispatch(loadingError())
+                dispatch(loadingError(err.response.status))
             })
     }
 }

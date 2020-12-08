@@ -1,20 +1,15 @@
 import React from "react"
 import {connect} from "react-redux"
-import {Box, CardMedia, Typography} from "@material-ui/core";
-import {makeStyles} from "@material-ui/core/styles";
+import {Avatar, Container, Grid, Typography} from "@material-ui/core";
+import {makeStyles} from "@material-ui/core/styles"
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        display: 'flex'
+    large:{
+        width: theme.spacing(10),
+        height: theme.spacing(10)
     },
-    media: {
-        height: '200px',
-        width: '200px'
-    },
-    flexColumn: {
-        display: 'flex',
-        flexDirection: 'column',
-        paddingLeft: theme.spacing(2)
+    spacing:{
+        marginTop: theme.spacing(2)
     }
 }))
 
@@ -24,11 +19,18 @@ const CommentDetail = (props) => {
     const classes = useStyles()
 
     return (
-        <Box className={classes.root}>
-            <CardMedia className={classes.media} image={`${process.env.REACT_APP_BASE_PUBLIC_URL}/${comment.user.avatar}`}/>
-            <Box className={classes.flexColumn}>
-            </Box>
-        </Box>
+        <Container>
+            <Grid container>
+                <Grid container item justify="center"  xs={12}>
+                    <Avatar alt={"user avatar"} className={classes.large} src={`${process.env.REACT_APP_BASE_PUBLIC_URL}/${comment.user.avatar}`} />
+                </Grid>
+                <Grid container item justify={"flex-start"} className={classes.spacing}>
+                    <Typography variant={"body1"}>{comment.content}</Typography>
+                    <Typography variant={"subtitle2"} color={"primary"} className={classes.spacing}>{comment.user.username} {comment.createdAt} {comment.published ? 'Publié' : 'Non publié'}</Typography>
+                </Grid>
+
+            </Grid>
+        </Container>
     )
 
 }

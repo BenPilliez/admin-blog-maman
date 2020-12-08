@@ -14,6 +14,7 @@ const RenderCardSwitch = (props) => {
                     checked={checked}
                     onChange={(event) => {
                         setChecked(event.target.checked)
+                        row.published = event.target.checked
                         switchButton.handler(row.id, event.target.checked)
                     }}/>}
                 label={switchButton.label}/>

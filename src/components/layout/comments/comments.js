@@ -1,9 +1,10 @@
-import React from "react"
+import React, {useEffect} from "react"
 import {connect} from "react-redux"
 import ReuseTable from "../../custom/table/table"
-import {FormControl, Switch, useMediaQuery} from "@material-ui/core"
+import {useMediaQuery} from "@material-ui/core"
 import CustomDialog from "../../custom/customDialog"
 import CommentDetail from "./commentDetail"
+import {resetState, setPublished,deleteComments} from "../../../store/actions/commentsActions"
 
 const Comments = (props) => {
 
@@ -12,6 +13,14 @@ const Comments = (props) => {
     const [open, setOpen] = React.useState(false)
     const [commentId, setCommentId] = React.useState()
     const [needUpdate, setNeedUpdate] = React.useState(false)
+
+    const {published, deleteComments, reset, success} = props
+
+    useEffect(() => {
+        if (success && needUpdate) {
+            reset()
+        }
+    }, [success, needUpdate])
 
     const actions = [
         {
@@ -31,7 +40,8 @@ const Comments = (props) => {
 
 
     const deleteAction = (ids) => {
-        console.log(ids)
+        deleteComments(ids)
+        setNeedUpdate(true)
     }
     return (
         <React.Fragment>
@@ -54,15 +64,12 @@ const Comments = (props) => {
                                 label: 'Status',
                                 bddName: 'published',
                                 sorting: true,
-                                data: (row) => <FormControl>
-                                    <Switch
-                                        checked={!!row.published}
-                                        onChange={(event) => {
-                                            console.log(row.id, event.target.checked)
-
-                                        }}
-                                    />
-                                </FormControl>
+                                type: 'switch',
+                                data: (row) => row.published,
+                                handler: (id, value) => {
+                                    published(id, value)
+                                    setNeedUpdate(false)
+                                }
                             },
                             {
                                 label: 'Ajouté le ',
@@ -90,10 +97,25 @@ const Comments = (props) => {
                 handleClose={handleDialog}
                 dialogActions={[{label: 'Fermer'}]}
             >
-                <CommentDetail commentId={commentId} />
+                <CommentDetail commentId={commentId}/>
             </CustomDialog>
         </React.Fragment>
     )
 }
 
-export default connect(null, null)(Comments)
+const mapStateToProps = (state) => {
+    console.log(state)
+    return {
+        success: state.comments.success
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        published: (id, value) => dispatch(setPublished(id, value)),
+        deleteComments: (ids) => dispatch(deleteComments(ids)),
+        reset: () => dispatch(resetState())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Comments)

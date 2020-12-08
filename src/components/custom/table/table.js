@@ -21,6 +21,9 @@ const styles = makeStyles((theme)=> ({
     title: {
         display: 'flex',
         justifyContent: 'space-between'
+    },
+    spacing: {
+        marginTop: theme.spacing(2)
     }
 }))
 
@@ -85,6 +88,12 @@ const ReuseTable = (props) => {
         setSelected(newSelected)
     }
 
+    const RenderTableError = () => {
+        return (
+            <Typography className={classes.spacing} color={"error"}  variant={"body1"} component={"h4"}>{loadError}</Typography>
+        )
+    }
+
     const CustomToolBar = (props) => {
         const {tableName} = props
         return (
@@ -110,9 +119,12 @@ const ReuseTable = (props) => {
                 <TableContainer component={Paper}>
                     <Table size={"medium"}>
                         <RenderTableHead deleteAction={deleteAction}  direction={direction} headCell={headCell} orderBy={orderBy} handleSort={handleSort} />
-                        <RenderTableBody headCell={headCell} actions={actions} selected={selected} loadError={loadError} rows={rows} handleSelect={handleSelect} />
+                        {rows.length > 0 ?
+                            <RenderTableBody headCell={headCell} actions={actions} selected={selected} rows={rows} handleSelect={handleSelect} /> : null
+                        }
                     </Table>
                 </TableContainer>
+                {loadError ? <RenderTableError loadError={loadError} /> : null}
                 <TablePagination
                     rowsPerPageOptions={[1, 5, 10, 25]}
                     component="div"

@@ -19,7 +19,7 @@ const handleRequestReducers = (state = initState, action) => {
             return {
                 ...state,
                 loaded: true,
-                loadingError: 'Oops on a eu un problème en chargeant la liste'
+                loadingError: action.status === 404 ? 'Aucune donnée pour le moment' : 'Oops on a eu un problème en chargeant la liste'
             }
         case 'DATA_LOADING_SUCCESS' :
             return {
