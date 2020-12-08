@@ -1,9 +1,13 @@
 import React from "react"
 import {connect} from "react-redux"
 import ReuseTable from "../../custom/table/table"
-import {FormControl, Switch} from "@material-ui/core";
+import {FormControl, Switch, useMediaQuery} from "@material-ui/core"
+import CustomDialog from "../../custom/customDialog"
+import CommentDetail from "./commentDetail"
 
 const Comments = (props) => {
+
+    const matches = useMediaQuery((theme) => theme.breakpoints.down('sm') || theme.breakpoints.down('xs'), {noSsr: true})
 
     const [open, setOpen] = React.useState(false)
     const [commentId, setCommentId] = React.useState()
@@ -19,40 +23,20 @@ const Comments = (props) => {
                 setNeedUpdate(false)
                 setCommentId(id)
             }
-        },
-        /*{
-            label: 'Publier',
-            type: 'switch',
-            action: 'published',
-            labelPlacement: 'start',
-            handler: (id) => {
+        }]
 
-            }
-        }*/
-    ]
+    const handleDialog = () => {
+        setOpen(!open)
+    }
 
 
-    /*return (
-        <TableCell>
-            <FormControl >
-                <FormControlLabel
-                    labelPlacement={action.labelPlacement}
-                    control={<Switch
-                        checked={!!row.published}
-                        onChange={(event) => {
-                            setChecked(event.target.checked)
-                            action.handler(row.id, event.target.checked)
-                        }}/>}
-                    label={action.label}/>
-            </FormControl>
-        </TableCell>
-    )*/
     const deleteAction = (ids) => {
         console.log(ids)
     }
     return (
         <React.Fragment>
             <ReuseTable
+                needUpdate={needUpdate}
                 options={
                     {
                         tableTile: 'Commentaires',
@@ -63,7 +47,6 @@ const Comments = (props) => {
                             },
                             {
                                 label: "Utilisateur",
-                                sorting: true,
                                 bddName: 'username',
                                 data: (row) => row.user.username
                             },
@@ -76,6 +59,7 @@ const Comments = (props) => {
                                         checked={!!row.published}
                                         onChange={(event) => {
                                             console.log(row.id, event.target.checked)
+
                                         }}
                                     />
                                 </FormControl>
@@ -97,9 +81,17 @@ const Comments = (props) => {
                             url: 'comments'
                         }
                     }}
-            >
+            />
 
-            </ReuseTable>
+            <CustomDialog
+                title={"Jeter un oeil"}
+                isOpen={open}
+                fullScreen={matches}
+                handleClose={handleDialog}
+                dialogActions={[{label: 'Fermer'}]}
+            >
+                <CommentDetail commentId={commentId} />
+            </CustomDialog>
         </React.Fragment>
     )
 }
