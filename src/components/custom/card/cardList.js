@@ -1,18 +1,22 @@
 import React, {useEffect} from "react"
 import {connect} from "react-redux"
-import {Card, CircularProgress, Grid, TablePagination} from "@material-ui/core"
+import {Card, CircularProgress, Grid, TablePagination, Typography} from "@material-ui/core"
 import RenderCardHeader from "./cardHeader"
 import RenderCardContent from "./cardContent"
 import RenderCardMedia from "./cardMedia"
 import RenderCardActions from "./cardActions"
 import RenderCardSwitch from "./cardSwitch"
 import {loadData} from "../../../store/actions/handleRequestActions"
-import {makeStyles} from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles"
+import clsx from "clsx"
 
 
 const useStyles = makeStyles((theme) => ({
     spacing: {
         margin: theme.spacing(2)
+    },
+    error: {
+        width: '100%'
     }
 }))
 
@@ -55,7 +59,7 @@ const ReuseCardList = (props) => {
         <React.Fragment>
             {isMounted ? <React.Fragment>
                 <Grid container>
-                    {!loadError && rows ? rows.map((row, index) => {
+                    {!loadError ? rows.map((row, index) => {
                         return (<Grid style={{padding: 10}} item key={index} xs={12} lg={3} md={3} sm={12}>
                             <Card>
                                 {cardHeader && cardHeader.length > 0 ?
@@ -67,7 +71,7 @@ const ReuseCardList = (props) => {
                                 {cardSwitch ? <RenderCardSwitch row={row} switchButton={cardSwitch}/> : null}
                             </Card>
                         </Grid>)
-                    }) : <div>{loadError}</div>}
+                    }) :  <Typography className={clsx(classes.spacing, classes.error)} color={"error"}  align={"center"}  variant={"body1"} component={"h4"}>{loadError}</Typography>}
                 </Grid>
                 <TablePagination
                     className={classes.spacing}

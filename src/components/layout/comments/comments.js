@@ -20,7 +20,7 @@ const Comments = (props) => {
         if (success && needUpdate) {
             reset()
         }
-    }, [success, needUpdate])
+    }, [success, needUpdate,reset])
 
     const actions = [
         {
