@@ -3,7 +3,7 @@ import {createCategory, resetState, updateCategory} from "../../../store/actions
 import {connect} from "react-redux"
 import {Controller} from "react-hook-form"
 import {useForm} from "react-hook-form"
-import {TextField, Container, Grid, Button} from "@material-ui/core"
+import {TextField, Container, Grid, Button, Typography} from "@material-ui/core"
 import {makeStyles} from "@material-ui/core/styles";
 
 const useStyle = makeStyles((theme) => ({
@@ -84,7 +84,7 @@ const FormCategory = (props) => {
                             </Controller>
 
                             {errors.name && (
-                                <div className="error">{errors.name.message}</div>
+                                <Typography variant={"subtitle2"} color={"error"}>{errors.name.message}</Typography>
                             )}
                         </Grid>
                         <Grid item className={classes.flex} xs>

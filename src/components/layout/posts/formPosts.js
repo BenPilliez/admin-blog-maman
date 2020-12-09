@@ -6,7 +6,7 @@ import CustomEditor from "../../custom/editor"
 import {DropzoneArea} from "material-ui-dropzone"
 import {converFormToFormData} from "../../../helpers/convertFormToFomdata"
 import {useForm,Controller} from "react-hook-form"
-import {Button, Container, Grid, TextField} from "@material-ui/core"
+import {Button, Container, Grid, TextField, Typography} from "@material-ui/core"
 import {makeStyles} from "@material-ui/core/styles"
 import CustomAutocomplete from "../../custom/autocomplete"
 
@@ -110,6 +110,9 @@ const FormPost = (props) => {
                                 }
                             >
                             </Controller>
+                            {errors.title && (
+                            <Typography variant={"subtitle2"} color={"error"}>{errors.title.message}</Typography>
+                            )}
                         </Grid>
                         <Grid item xs={12}>
                             <Controller
@@ -120,8 +123,19 @@ const FormPost = (props) => {
                                         props.onChange(value)
                                     }} options={categories} label={"Categorie"}  id={"categorySelect"}/>
                                 }}
+                                rules={
+                                    {
+                                        required: {
+                                            value: true,
+                                            message: 'Il me faut une categorie'
+                                        }
+                                    }
+                                }
                             >
                             </Controller>
+                            {errors.categoryId && (
+                            <Typography variant={"subtitle2"} color={"error"}>{errors.categoryId.message}</Typography>
+                            )}
                         </Grid>
                         <Grid item xs={12} >
                             <Controller
@@ -130,8 +144,19 @@ const FormPost = (props) => {
                                 render={(props) => {
                                     return <CustomEditor value={props.value} onChange={props.onChange} />
                                 }}
+                                rules={
+                                    {
+                                        required: {
+                                            value: true,
+                                            message: 'Il me faut un contenu'
+                                        }
+                                    }
+                                }
                             >
                             </Controller>
+                            {errors.content && (
+                            <Typography variant={"subtitle2"} color={"error"}>{errors.content.message}</Typography>
+                            )}
                         </Grid>
                         <Grid item xs={12}>
                             <Controller

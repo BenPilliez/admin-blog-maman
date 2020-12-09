@@ -91,7 +91,7 @@ const Comments = (props) => {
                 isOpen={open}
                 fullScreen={matches}
                 handleClose={handleDialog}
-                dialogActions={[{label: 'Fermer'}]}
+                /*dialogActions={[{label: 'Fermer'}]}*/
             >
                 <CommentDetail commentId={commentId}/>
             </CustomDialog>

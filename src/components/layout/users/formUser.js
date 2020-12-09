@@ -1,5 +1,5 @@
 import React, {useEffect} from "react"
-import {Avatar, Button, Container, Grid, IconButton, InputAdornment, TextField} from "@material-ui/core"
+import {Avatar, Button, Container, Grid, IconButton, InputAdornment, TextField, Typography} from "@material-ui/core"
 import {DropzoneArea} from "material-ui-dropzone"
 import CustomDialog from "../../custom/customDialog"
 import {converFormToFormData} from "../../../helpers/convertFormToFomdata"
@@ -174,7 +174,7 @@ const FormUser = (props) => {
                         />
 
                         {errors.email && (
-                            <div className="error">{errors.email.message}</div>
+                            <Typography variant={"subtitle2"} color={"error"}>{errors.email.message}</Typography>
                         )}
 
                     </Grid>
@@ -248,7 +248,7 @@ const FormUser = (props) => {
                         </Controller>
 
                         {errors.password && (
-                            <div className="error">{errors.password.message}</div>
+                            <Typography variant={"subtitle2"} color={"error"} >{errors.password.message}</Typography>
                         )}
 
                     </Grid>
@@ -303,7 +303,7 @@ const FormUser = (props) => {
                             </Controller>
 
                             {errors.confirmPassword && (
-                                <div className="error">{errors.confirmPassword.message}</div>
+                                <Typography variant={"subtitle2"} color={"error"} >{errors.confirmPassword.message}</Typography>
                             )}
                         </Grid>
                     </>) : null}

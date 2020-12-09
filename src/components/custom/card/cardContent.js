@@ -9,11 +9,7 @@ const RenderCardContent = (props) => {
     }
 
     return (
-        <CardContent>
-            <Typography>
-                <RenderContent/>
-            </Typography>
-        </CardContent>
+        <CardContent dangerouslySetInnerHTML={{__html: RenderContent()}}/>
     )
 }
 
