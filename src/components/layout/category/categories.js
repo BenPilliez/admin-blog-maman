@@ -3,8 +3,6 @@ import {connect} from "react-redux"
 import {Button, useMediaQuery} from "@material-ui/core"
 import {deleteCategory, resetState} from "../../../store/actions/categoriesActions"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
-import moment from "moment"
-import "moment/locale/fr"
 import ReuseTable from "../../custom/table/table"
 import ReuseList from "../../custom/list"
 import {makeStyles} from "@material-ui/core/styles"
@@ -90,7 +88,7 @@ const Categories = (props) => {
                         },
                         {
                             label: "Créer le ",
-                            data: (row) => moment(row.createdAt).format('LL')
+                            data: (row) => row.createdAt
                         }
                     ],
                     deleteAction: deleteAction,

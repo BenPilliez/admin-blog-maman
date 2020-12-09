@@ -17,7 +17,6 @@
     "draft-js-export-html": "^1.4.1",
     "fontsource-roboto": "^3.0.3",
     "material-ui-dropzone": "^3.5.0",
-    "moment": "^2.29.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-hook-form": "^6.11.5",
