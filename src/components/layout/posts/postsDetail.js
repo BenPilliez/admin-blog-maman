@@ -32,9 +32,7 @@ const PostDetail = (props) => {
                         </Grid>
                     )}
                     <Grid item xs={12}>
-                        <Typography align={"center"} variant={"body1"}>
-                            {post.content}
-                        </Typography>
+                        <Typography align={"center"} variant={"body1"} dangerouslySetInnerHTML={{__html: post['content']}}/>
                     </Grid>
 
                     <Grid item xs={12}>

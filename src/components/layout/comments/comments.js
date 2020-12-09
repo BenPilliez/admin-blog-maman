@@ -52,11 +52,7 @@ const Comments = (props) => {
                         tableTile: 'Commentaires',
                         headCell: [
                             {
-                                label: "id",
-                                sorting: true,
-                            },
-                            {
-                                label: "Utilisateur",
+                                label: "Pseudo",
                                 bddName: 'username',
                                 data: (row) => row.user.username
                             },
@@ -72,7 +68,7 @@ const Comments = (props) => {
                                 }
                             },
                             {
-                                label: 'Ajouté le ',
+                                label: 'date',
                                 bddName: 'createdAt',
                                 sorting: true,
                                 data: (row) => row.createdAt
@@ -95,7 +91,7 @@ const Comments = (props) => {
                 isOpen={open}
                 fullScreen={matches}
                 handleClose={handleDialog}
-                dialogActions={[{label: 'Fermer'}]}
+                /*dialogActions={[{label: 'Fermer'}]}*/
             >
                 <CommentDetail commentId={commentId}/>
             </CustomDialog>
@@ -104,7 +100,6 @@ const Comments = (props) => {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state)
     return {
         success: state.comments.success
     }

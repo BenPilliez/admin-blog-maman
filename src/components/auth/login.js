@@ -95,7 +95,7 @@ const Login = (props) => {
                         />
 
                         {errors.email && (
-                            <div className="error">{errors.email.message}</div>
+                            <Typography color={"error"} variant={"subtitle2"}>{errors.email.message}</Typography>
                         )}
 
                         <Controller
@@ -125,7 +125,7 @@ const Login = (props) => {
                         />
 
                         {errors.password && (
-                            <div className="error">{errors.password.message}</div>
+                            <Typography variant={"subtitle2"} color={"error"}>{errors.password.message}</Typography>
                         )}
 
                         <Button

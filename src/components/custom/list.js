@@ -58,7 +58,7 @@ const ReuseList = (props) => {
     const RenderSecondaryItem = (props) => {
         const {item, row} = props
         const data = typeof item.data === "function" ? item.data(row) : row[item.label]
-        return <span style={{padding: "2px"}}>{item.label} {data}</span>
+        return <Typography variant={"subtitle2"}>{data}</Typography>
     }
 
     const RenderItemError = () => {
@@ -79,15 +79,11 @@ const ReuseList = (props) => {
                         {!loadError && rows ? rows.map((row, index) => {
                             return <ListItem key={index}>
                                 <ListItemText
+                                    disableTypography={true}
                                     primary={text.data(row)}
-                                    secondary={
-                                        <React.Fragment>
-                                            <Typography component={"span"} variant={"body2"}>
-                                                {secondaryText && secondaryText.map((item, index) => {
-                                                    return (<RenderSecondaryItem key={index} row={row} item={item}/>)
-                                                })}
-                                            </Typography>
-                                        </React.Fragment>
+                                    secondary={ secondaryText && secondaryText.map((item, index) => {
+                                                return (<RenderSecondaryItem key={index} row={row} item={item}/>)
+                                            })
                                     }/>
                                 <ListItemSecondaryAction>
                                     <CustomMenu menuitemlists={actions} id={row.id} deleteaction={deleteAction}/>
