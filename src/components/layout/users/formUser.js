@@ -167,6 +167,7 @@ const FormUser = (props) => {
                                     value: true,
                                     message: "Sans email c'est compliqué"
                                 }, pattern: {
+                                    // eslint-disable-next-line
                                     value: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
                                     message: "C'est un email ça ?"
                                 }
@@ -211,6 +212,7 @@ const FormUser = (props) => {
                                         message: 'Il me faut un mot de passe'
                                     },
                                     pattern: {
+                                        // eslint-disable-next-line
                                         value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[.!@#\?<>\{\}\[\]\(\)\$%\^&\*])(?=.{8,})/,
                                         message: 'Le mot doit contenir au moins une majuscule,faire au moins 8 caractères,un nombre et un caractère spécial'
                                     }
